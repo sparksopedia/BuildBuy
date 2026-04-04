@@ -26,12 +26,14 @@ export default function EvaluateView({
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const canSubmitEval =
     evalName.trim() && rubric.dimensions.every((d) => scores[d.id] !== undefined);
 
   async function handleSubmitEval() {
     setLoading(true);
+    setSubmitError(null);
     const entry: Omit<EvalResponse, "id"> = {
       evaluatorName: evalName.trim(),
       role: evalRole,
@@ -39,11 +41,18 @@ export default function EvaluateView({
       comment: comment.trim(),
       submittedAt: new Date().toISOString(),
     };
-    await submitResponse(rubric.id, entry);
-    const updated = await getResponses(rubric.id);
-    onResponsesLoaded(updated);
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      await submitResponse(rubric.id, entry);
+      const updated = await getResponses(rubric.id);
+      onResponsesLoaded(updated);
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : "Failed to submit evaluation. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -255,6 +264,21 @@ export default function EvaluateView({
               }}
             />
 
+            {submitError && (
+              <div
+                style={{
+                  background: "#FEF2F2",
+                  border: "1px solid #FECACA",
+                  borderRadius: 9,
+                  padding: "10px 14px",
+                  fontSize: 13,
+                  color: "#DC2626",
+                  marginBottom: 16,
+                }}
+              >
+                {submitError}
+              </div>
+            )}
             <button
               className="btn-primary"
               style={{ width: "100%", padding: "13px", fontSize: 15 }}

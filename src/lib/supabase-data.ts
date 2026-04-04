@@ -24,7 +24,7 @@ export async function getRubric(id: string): Promise<Rubric | null> {
   };
 }
 
-export async function createRubric(rubric: Rubric): Promise<boolean> {
+export async function createRubric(rubric: Rubric): Promise<void> {
   const { error } = await supabase.from("rubrics").insert({
     id: rubric.id,
     org: rubric.org || null,
@@ -36,7 +36,9 @@ export async function createRubric(rubric: Rubric): Promise<boolean> {
     created_at: rubric.createdAt,
   });
 
-  return !error;
+  if (error) {
+    throw new Error(`Failed to save rubric: ${error.message}`);
+  }
 }
 
 export async function getRubricsByAuthor(authorName: string): Promise<Rubric[]> {
@@ -84,7 +86,7 @@ export async function getResponses(rubricId: string): Promise<EvalResponse[]> {
 export async function submitResponse(
   rubricId: string,
   response: Omit<EvalResponse, "id">
-): Promise<boolean> {
+): Promise<void> {
   const { error } = await supabase.from("responses").insert({
     rubric_id: rubricId,
     evaluator_name: response.evaluatorName,
@@ -94,7 +96,9 @@ export async function submitResponse(
     submitted_at: response.submittedAt,
   });
 
-  return !error;
+  if (error) {
+    throw new Error(`Failed to submit response: ${error.message}`);
+  }
 }
 
 // ── Real-time subscription ───────────────────────────────────────

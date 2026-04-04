@@ -32,6 +32,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rubric, setRubric] = useState<Rubric | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   const toggleDim = (id: string) =>
     setSelDims((prev) =>
@@ -44,6 +45,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
 
   async function handleCreate() {
     setLoading(true);
+    setCreateError(null);
     const id = genCode();
     const allDims = [...DIMS, ...customDims];
     const data: Rubric = {
@@ -56,11 +58,18 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
       scale,
       createdAt: new Date().toISOString(),
     };
-    await createRubric(data);
-    setCreatedId(id);
-    setRubric(data);
-    setStep(4);
-    setLoading(false);
+    try {
+      await createRubric(data);
+      setCreatedId(id);
+      setRubric(data);
+      setStep(4);
+    } catch (err) {
+      setCreateError(
+        err instanceof Error ? err.message : "Failed to save rubric. Check your Supabase configuration."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -868,6 +877,21 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                 );
               })}
             </div>
+            {createError && (
+              <div
+                style={{
+                  background: "#FEF2F2",
+                  border: "1px solid #FECACA",
+                  borderRadius: 9,
+                  padding: "10px 14px",
+                  fontSize: 13,
+                  color: "#DC2626",
+                  marginBottom: 16,
+                }}
+              >
+                {createError}
+              </div>
+            )}
             <div style={{ display: "flex", gap: 10 }}>
               <button className="btn-outline" onClick={() => setStep(2)}>
                 ← Edit
