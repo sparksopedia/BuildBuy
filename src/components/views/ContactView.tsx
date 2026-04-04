@@ -19,14 +19,16 @@ async function submitContact({
   subject: string;
   message: string;
 }) {
-  const endpoint =
-    process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/maqljyqd";
+  const endpoint = "https://formspree.io/f/maqljyqd";
   const res = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ name, email, subject, message, _replyto: email }),
   });
-  if (!res.ok) throw new Error("Submission failed");
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`Submission failed (${res.status}): ${body}`);
+  }
 }
 
 export default function ContactView({ onNavigate }: ContactViewProps) {
