@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description:
     "A free tool that helps product, engineering, and business teams evaluate whether to build internally or buy a commercial solution. Score dimensions, collect stakeholder input, and export results.",
   metadataBase: new URL("https://buildorbuy.app"),
+  icons: {
+    icon: "/favicon.svg",
+  },
   openGraph: {
     title: "Build or Buy — Structured Decision Rubric",
     description:

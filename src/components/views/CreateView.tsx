@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import QRCode from "react-qr-code";
 import { Card, FieldLabel, TextInput, Divider } from "@/components/Primitives";
 import { DIMS, SCALES, type Dimension, type Scale, type Rubric } from "@/lib/constants";
 import { genCode } from "@/lib/utils";
@@ -974,8 +975,27 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                 {copied ? "✓ Copied" : "Copy"}
               </button>
             </div>
-            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 28 }}>
+            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 20 }}>
               Retrieve this rubric anytime from Home → My Rubrics using your author name.
+            </p>
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 12,
+                padding: 16,
+                display: "inline-block",
+                marginBottom: 12,
+              }}
+            >
+              <QRCode
+                value={`https://buildorbuy.app?code=${createdId}`}
+                size={140}
+                bgColor="#FFFFFF"
+                fgColor="#1A2744"
+              />
+            </div>
+            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 28 }}>
+              Scan to open the evaluation directly on any device.
             </p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
               <button
