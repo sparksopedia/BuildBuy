@@ -325,33 +325,35 @@ export default function ResultsView({
                   </p>
                 </Card>
 
-                <Card
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                    padding: "20px 24px",
-                  }}
-                >
-                  <div style={{ flexShrink: 0 }}>
-                    <QRCode
-                      value={`https://buildorbuy.app?code=${rubric.id}`}
-                      size={80}
-                      bgColor="#FFFFFF"
-                      fgColor="#1A2744"
-                    />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#1A2744", marginBottom: 4 }}>
-                      Invite more evaluators
+                <Card>
+                  <h3
+                    style={{
+                      fontFamily: "'Fraunces', serif",
+                      fontSize: 18,
+                      fontWeight: 600,
+                      color: "#1A2744",
+                      marginBottom: 18,
+                    }}
+                  >
+                    Invite More Evaluators
+                  </h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+                    <div style={{ flexShrink: 0 }}>
+                      <QRCode
+                        value={`https://buildorbuy.app?code=${rubric.id}`}
+                        size={120}
+                        bgColor="#FFFFFF"
+                        fgColor="#1A2744"
+                      />
                     </div>
-                    <p style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.5, margin: 0 }}>
+                    <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.65, margin: 0 }}>
                       Scan the QR code or share code{" "}
                       <strong
                         style={{
                           fontFamily: "'JetBrains Mono', monospace",
-                          letterSpacing: 1,
+                          letterSpacing: 2,
                           color: "#1A2744",
+                          fontSize: 16,
                         }}
                       >
                         {rubric.id}
