@@ -10,7 +10,8 @@ create table if not exists public.rubrics (
   org          text,
   title        text not null,
   description  text,
-  author_key   text not null,
+  author_name  text not null,
+  author_key   text not null,              -- lowercased author name for lookups
   dimensions   jsonb not null default '[]',   -- array of {id, name, desc, custom?}
   scale        jsonb not null default '{}',   -- {label, min, max, note, buildLabel, buyLabel}
   created_at   timestamptz not null default now()
