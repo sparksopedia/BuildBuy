@@ -16,6 +16,7 @@ export interface Database {
           title: string;
           description: string | null;
           author_name: string;
+          author_key: string;
           dimensions: Json;
           scale: Json;
           created_at: string;
@@ -26,6 +27,7 @@ export interface Database {
           title: string;
           description?: string | null;
           author_name: string;
+          author_key: string;
           dimensions: Json;
           scale: Json;
           created_at?: string;
@@ -36,6 +38,7 @@ export interface Database {
           title?: string;
           description?: string | null;
           author_name?: string;
+          author_key?: string;
           dimensions?: Json;
           scale?: Json;
           created_at?: string;

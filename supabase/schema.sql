@@ -11,13 +11,14 @@ create table if not exists public.rubrics (
   title        text not null,
   description  text,
   author_name  text not null,
+  author_key   text not null,              -- lowercased author name for lookups
   dimensions   jsonb not null default '[]',   -- array of {id, name, desc, custom?}
   scale        jsonb not null default '{}',   -- {label, min, max, note, buildLabel, buyLabel}
   created_at   timestamptz not null default now()
 );
 
 -- Index for author lookup
-create index if not exists idx_rubrics_author on public.rubrics (lower(author_name));
+create index if not exists idx_rubrics_author on public.rubrics (lower(author_key));
 
 -- ── Responses ────────────────────────────────────────────────────
 create table if not exists public.responses (

@@ -17,7 +17,7 @@ export async function getRubric(id: string): Promise<Rubric | null> {
     org: data.org ?? "",
     title: data.title,
     description: data.description ?? "",
-    authorName: data.author_name,
+    authorName: data.author_key,
     dimensions: data.dimensions as unknown as Dimension[],
     scale: data.scale as unknown as Rubric["scale"],
     createdAt: data.created_at,
@@ -31,6 +31,7 @@ export async function createRubric(rubric: Rubric): Promise<void> {
     title: rubric.title,
     description: rubric.description || null,
     author_name: rubric.authorName,
+    author_key: rubric.authorName.trim().toLowerCase(),
     dimensions: rubric.dimensions as unknown as Record<string, unknown>[],
     scale: rubric.scale as unknown as Record<string, unknown>,
     created_at: rubric.createdAt,
@@ -45,7 +46,7 @@ export async function getRubricsByAuthor(authorName: string): Promise<Rubric[]> 
   const { data, error } = await supabase
     .from("rubrics")
     .select("*")
-    .ilike("author_name", authorName)
+    .ilike("author_key", authorName)
     .order("created_at", { ascending: false });
 
   if (error || !data) return [];
@@ -55,7 +56,7 @@ export async function getRubricsByAuthor(authorName: string): Promise<Rubric[]> 
     org: d.org ?? "",
     title: d.title,
     description: d.description ?? "",
-    authorName: d.author_name,
+    authorName: d.author_key,
     dimensions: d.dimensions as unknown as Dimension[],
     scale: d.scale as unknown as Rubric["scale"],
     createdAt: d.created_at,
