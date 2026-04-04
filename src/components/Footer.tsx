@@ -10,17 +10,17 @@ export default function Footer({ onContact }: FooterProps) {
       style={{
         borderTop: "1px solid #E5E7EB",
         marginTop: 40,
-        padding: "20px 20px 28px",
+        padding: "24px 20px 32px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 10,
+        gap: 16,
       }}
     >
       <div
         style={{
           display: "flex",
-          gap: 20,
+          gap: 12,
           alignItems: "center",
           flexWrap: "wrap",
           justifyContent: "center",
@@ -39,6 +39,26 @@ export default function Footer({ onContact }: FooterProps) {
         >
           B/B
         </span>
+        <span style={{ color: "#E5E7EB" }}>·</span>
+        <button
+          onClick={onContact}
+          style={{
+            background: "#1A2744",
+            color: "#fff",
+            border: "none",
+            borderRadius: 7,
+            padding: "7px 16px",
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: "pointer",
+            fontFamily: "'DM Sans', sans-serif",
+            transition: "background 0.15s",
+          }}
+          className="footer-contact-btn"
+        >
+          Contact Us
+        </button>
+        <span style={{ color: "#E5E7EB" }}>·</span>
         <a
           href="https://venmo.com/sparksopedia"
           target="_blank"
@@ -52,7 +72,7 @@ export default function Footer({ onContact }: FooterProps) {
             color: "#fff",
             border: "none",
             borderRadius: 7,
-            padding: "6px 14px",
+            padding: "7px 14px",
             fontSize: 12,
             fontWeight: 600,
             cursor: "pointer",
@@ -62,22 +82,6 @@ export default function Footer({ onContact }: FooterProps) {
         >
           ♥ Support on Venmo
         </a>
-        <button
-          onClick={onContact}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 13,
-            color: "#9CA3AF",
-            fontWeight: 500,
-            fontFamily: "'DM Sans', sans-serif",
-            transition: "color 0.15s",
-          }}
-          className="footer-link"
-        >
-          Contact
-        </button>
       </div>
       <p style={{ fontSize: 12, color: "#D1D5DB", textAlign: "center" }}>
         A free tool for product and strategy teams. ·{" "}

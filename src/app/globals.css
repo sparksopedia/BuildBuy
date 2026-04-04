@@ -43,6 +43,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: #1A2744
 .footer-link { color: #9CA3AF; text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.15s; }
 .footer-link:hover { color: #1A2744; }
 .venmo-btn:hover { background: #b07e22 !important; }
+.footer-contact-btn:hover { background: #243660 !important; }
 
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #1A2744; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25); cursor: pointer; }
 input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #1A2744; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25); cursor: pointer; }
