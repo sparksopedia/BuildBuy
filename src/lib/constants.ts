@@ -12,6 +12,7 @@ export interface Scale {
   note: string;
   buildLabel: string;
   buyLabel: string;
+  type?: "numeric" | "stars" | "thumbs" | "slider";
 }
 
 export interface Rubric {
@@ -57,6 +58,9 @@ export const SCALES: Scale[] = [
   { label: "1–5", min: 1, max: 5, note: "Standard 5-point", buildLabel: "1", buyLabel: "5" },
   { label: "1–7", min: 1, max: 7, note: "Nuanced 7-point", buildLabel: "1", buyLabel: "7" },
   { label: "1–10", min: 1, max: 10, note: "Detailed 10-point", buildLabel: "1", buyLabel: "10" },
+  { label: "★ Stars", min: 1, max: 5, note: "5-star rating", buildLabel: "★", buyLabel: "★★★★★", type: "stars" },
+  { label: "👍/👎", min: 0, max: 1, note: "Thumbs up or down", buildLabel: "👎", buyLabel: "👍", type: "thumbs" },
+  { label: "Slider", min: 0, max: 10, note: "Precise 0.0–10.0", buildLabel: "0.0", buyLabel: "10.0", type: "slider" },
 ];
 
 export const STAKEHOLDER_ROLES = [

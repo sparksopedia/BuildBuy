@@ -99,8 +99,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             marginBottom: 14,
           }}
         >
-          Evaluate with
-          <br />
+          Evaluate with{" "}
           <span style={{ color: "#C8922A" }}>structured clarity.</span>
         </h1>
 

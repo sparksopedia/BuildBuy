@@ -20,7 +20,7 @@ async function submitContact({
   message: string;
 }) {
   const endpoint =
-    process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/xpwzgvnq";
+    process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/maqljyqd";
   const res = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },

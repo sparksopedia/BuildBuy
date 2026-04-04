@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import HomeView from "@/components/views/HomeView";
 import CreateView from "@/components/views/CreateView";
 import EvaluateView from "@/components/views/EvaluateView";
 import ResultsView from "@/components/views/ResultsView";
 import ContactView from "@/components/views/ContactView";
+import { getRubric } from "@/lib/supabase-data";
 import type { Rubric, EvalResponse } from "@/lib/constants";
 
 type View = "home" | "create" | "evaluate" | "evaluate-as-author" | "results" | "contact";
@@ -15,6 +16,21 @@ export default function BuildBuyApp() {
   const [rubric, setRubric] = useState<Rubric | null>(null);
   const [responses, setResponses] = useState<EvalResponse[]>([]);
   const [authorName, setAuthorName] = useState("");
+
+  // Auto-join if ?code=XXXXXX is in the URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code")?.toUpperCase();
+    if (!code) return;
+    getRubric(code).then((r) => {
+      if (r) {
+        setRubric(r);
+        setView("evaluate");
+        // Clean the URL without reloading
+        window.history.replaceState({}, "", window.location.pathname);
+      }
+    });
+  }, []);
 
   const handleNavigate = useCallback(
     (target: string) => {
