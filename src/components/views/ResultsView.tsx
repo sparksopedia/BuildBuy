@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import QRCode from "react-qr-code";
 import { Card } from "@/components/Primitives";
 import Footer from "@/components/Footer";
 import { subscribeToResponses, getResponses } from "@/lib/supabase-data";
@@ -197,9 +198,17 @@ export default function ResultsView({
               </strong>{" "}
               with your stakeholders to collect scores.
             </p>
-            <p style={{ fontSize: 13, color: "#9CA3AF", marginBottom: 20 }}>
-              Invite Product, Engineering, Operations, and Business team members for a well-rounded
-              view.
+            <div style={{ margin: "16px 0", display: "inline-block", background: "#fff", borderRadius: 12, padding: 14 }}>
+              <QRCode
+                value={`https://buildorbuy.app?code=${rubric.id}`}
+                size={120}
+                bgColor="#FFFFFF"
+                fgColor="#1A2744"
+              />
+            </div>
+            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 20 }}>
+              Scan to score, or invite Product, Engineering, Operations, and Business team members
+              for a well-rounded view.
             </p>
             <button className="btn-primary" onClick={() => onNavigate("evaluate")}>
               Be the First to Score →
@@ -314,6 +323,42 @@ export default function ResultsView({
                           ? "The aggregate leans toward a commercial solution, though worth reviewing dissenting views."
                           : "The aggregate indicates a strong case for purchasing a commercial solution."}
                   </p>
+                </Card>
+
+                <Card
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 20,
+                    padding: "20px 24px",
+                  }}
+                >
+                  <div style={{ flexShrink: 0 }}>
+                    <QRCode
+                      value={`https://buildorbuy.app?code=${rubric.id}`}
+                      size={80}
+                      bgColor="#FFFFFF"
+                      fgColor="#1A2744"
+                    />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#1A2744", marginBottom: 4 }}>
+                      Invite more evaluators
+                    </div>
+                    <p style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.5, margin: 0 }}>
+                      Scan the QR code or share code{" "}
+                      <strong
+                        style={{
+                          fontFamily: "'JetBrains Mono', monospace",
+                          letterSpacing: 1,
+                          color: "#1A2744",
+                        }}
+                      >
+                        {rubric.id}
+                      </strong>{" "}
+                      to collect additional scores.
+                    </p>
+                  </div>
                 </Card>
 
                 <Card>
