@@ -551,7 +551,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               Find this useful? Help keep it free and ad-free.
             </p>
             <a
-              href="https://venmo.com/sparksopedia"
+              href="https://donate.stripe.com/eVq3cxbrpbp732g8Ra0Ny00"
               target="_blank"
               rel="noopener noreferrer"
               className="venmo-btn"
@@ -569,7 +569,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                 transition: "background 0.15s",
               }}
             >
-              ♥ Support Build or Buy on Venmo
+              ♥ Support Build or Buy
             </a>
           </div>
 

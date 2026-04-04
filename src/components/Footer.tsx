@@ -60,7 +60,7 @@ export default function Footer({ onContact }: FooterProps) {
         </button>
         <span style={{ color: "#E5E7EB" }}>·</span>
         <a
-          href="https://venmo.com/sparksopedia"
+          href="https://donate.stripe.com/eVq3cxbrpbp732g8Ra0Ny00"
           target="_blank"
           rel="noopener noreferrer"
           className="venmo-btn"
@@ -80,7 +80,7 @@ export default function Footer({ onContact }: FooterProps) {
             transition: "background 0.15s",
           }}
         >
-          ♥ Support on Venmo
+          ♥ Support
         </a>
       </div>
       <p style={{ fontSize: 12, color: "#D1D5DB", textAlign: "center" }}>
