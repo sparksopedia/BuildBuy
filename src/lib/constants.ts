@@ -64,11 +64,14 @@ export const SCALES: Scale[] = [
 ];
 
 export const STAKEHOLDER_ROLES = [
-  "Product",
-  "Engineering",
-  "Operations",
+  "Analytics",
   "Business / Strategy",
+  "Engineering",
   "Finance",
+  "Human Resources",
+  "Leadership",
   "Legal / Compliance",
+  "Operations",
+  "Product",
   "Other",
 ];

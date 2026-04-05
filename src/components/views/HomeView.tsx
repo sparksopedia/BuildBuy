@@ -134,7 +134,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             }}
           >
             Evaluate with{" "}
-            <span style={{ color: "#C8922A" }}>structured clarity.</span>
+            <span style={{ color: "#7BA3D4" }}>structured clarity.</span>
           </h1>
 
           <p
@@ -520,7 +520,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <button
               onClick={() => onNavigate("contact")}
               style={{
-                background: "#C8922A",
+                background: "#5B7BB4",
                 color: "#fff",
                 border: "none",
                 borderRadius: 10,
@@ -531,7 +531,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                 transition: "background 0.15s, transform 0.1s",
                 position: "relative",
               }}
-              className="venmo-btn"
+              className="donate-btn"
             >
               Get in Touch →
             </button>
@@ -554,12 +554,12 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               href="https://donate.stripe.com/eVq3cxbrpbp732g8Ra0Ny00"
               target="_blank"
               rel="noopener noreferrer"
-              className="venmo-btn"
+              className="donate-btn"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 8,
-                background: "#C8922A",
+                background: "#5B7BB4",
                 color: "#fff",
                 borderRadius: 10,
                 padding: "11px 22px",

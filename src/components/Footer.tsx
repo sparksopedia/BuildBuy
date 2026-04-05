@@ -63,12 +63,12 @@ export default function Footer({ onContact }: FooterProps) {
           href="https://donate.stripe.com/eVq3cxbrpbp732g8Ra0Ny00"
           target="_blank"
           rel="noopener noreferrer"
-          className="venmo-btn"
+          className="donate-btn"
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            background: "#C8922A",
+            background: "#5B7BB4",
             color: "#fff",
             border: "none",
             borderRadius: 7,

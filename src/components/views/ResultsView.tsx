@@ -672,7 +672,7 @@ export default function ResultsView({
                             background: "#F9FAFB",
                             borderRadius: 12,
                             padding: "16px 18px",
-                            borderLeft: "3px solid #C8922A",
+                            borderLeft: "3px solid #5B7BB4",
                           }}
                         >
                           <div
