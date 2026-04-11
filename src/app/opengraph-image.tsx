@@ -46,9 +46,9 @@ type FontSpec = {
 
 export default async function Image() {
   // Collect all glyphs needed for subsetting
-  const fraunceText = "Build or Buy";
+  const fraunceText = "The free build vs. buy decision framework.";
   const dmSansText =
-    "The free build vs. buy decision framework. Structured rubrics · Multi-stakeholder scoring · Free & ad-free buildorbuy.app B/B";
+    "Structured rubrics · Multi-stakeholder scoring · Free & ad-free buildorbuy.app B/B";
 
   const [fraunces, dmSansRegular, dmSansBold] = await Promise.all([
     loadGoogleFont("Fraunces", 700, fraunceText),
@@ -142,33 +142,23 @@ export default async function Image() {
           </div>
         </div>
 
-        {/* Middle: headline */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-          <div
-            style={{
-              fontFamily: "Fraunces",
-              fontWeight: 700,
-              fontSize: 124,
-              lineHeight: 1.02,
-              color: "#ffffff",
-              letterSpacing: -2,
-              display: "flex",
-            }}
-          >
-            Build or Buy
+        {/* Middle: headline — matches the site hero h1 */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            fontFamily: "Fraunces",
+            fontWeight: 700,
+            fontSize: 96,
+            lineHeight: 1.15,
+            letterSpacing: -1.5,
+          }}
+        >
+          <div style={{ color: "#ffffff", display: "flex" }}>
+            The free build vs. buy
           </div>
-          <div
-            style={{
-              fontFamily: "DM Sans",
-              fontWeight: 400,
-              fontSize: 38,
-              lineHeight: 1.25,
-              color: "rgba(255,255,255,0.82)",
-              maxWidth: 920,
-              display: "flex",
-            }}
-          >
-            The free build vs. buy decision framework.
+          <div style={{ color: "#7BA3D4", display: "flex" }}>
+            decision framework.
           </div>
         </div>
 
