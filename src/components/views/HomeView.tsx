@@ -133,8 +133,8 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               marginBottom: 18,
             }}
           >
-            Evaluate with{" "}
-            <span style={{ color: "#7BA3D4" }}>structured clarity.</span>
+            The free build vs. buy{" "}
+            <span style={{ color: "#7BA3D4" }}>decision framework.</span>
           </h1>
 
           <p
@@ -146,7 +146,8 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               marginBottom: 0,
             }}
           >
-            A free tool that helps teams decide whether to{" "}
+            A free build vs. buy tool that helps product, engineering, and business teams decide
+            whether to{" "}
             <strong style={{ color: "rgba(255,255,255,0.9)" }}>build internally</strong> or{" "}
             <strong style={{ color: "rgba(255,255,255,0.9)" }}>buy a commercial solution</strong>
             . Structured rubrics. Multi-stakeholder scoring. Exportable results.
@@ -468,10 +469,169 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             </div>
           </div>
 
+          {/* ── SEO content: What is build vs buy? ── */}
+          <section
+            style={{
+              marginTop: 48,
+              background: "#fff",
+              border: "1px solid #E5E7EB",
+              borderRadius: 18,
+              padding: "36px 30px",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "'Fraunces', serif",
+                fontSize: 24,
+                fontWeight: 600,
+                color: "#1A2744",
+                marginBottom: 14,
+              }}
+            >
+              What is a build vs. buy decision?
+            </h2>
+            <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 14 }}>
+              A <strong>build vs. buy decision</strong> (sometimes called a{" "}
+              <strong>make or buy analysis</strong>) is the choice between developing a capability
+              internally or purchasing a commercial off-the-shelf solution. Teams weigh cost,
+              time-to-value, strategic differentiation, maintenance burden, integration complexity,
+              and opportunity cost. Without a shared framework, these conversations devolve into
+              gut-feel debates — the loudest voice wins and the decision rarely sticks.
+            </p>
+            <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 0 }}>
+              <strong>Build or Buy</strong> gives product, engineering, operations, finance, and
+              leadership stakeholders a structured rubric to score each dimension of the decision.
+              Scores aggregate across evaluators so you can see where alignment is strong, where
+              it&apos;s split, and where the data pushes you toward building in-house or buying from
+              a vendor.
+            </p>
+
+            <h2
+              style={{
+                fontFamily: "'Fraunces', serif",
+                fontSize: 22,
+                fontWeight: 600,
+                color: "#1A2744",
+                marginTop: 32,
+                marginBottom: 14,
+              }}
+            >
+              When to use a build vs. buy framework
+            </h2>
+            <ul
+              style={{
+                fontSize: 15,
+                color: "#374151",
+                lineHeight: 1.75,
+                paddingLeft: 22,
+                marginBottom: 0,
+              }}
+            >
+              <li style={{ marginBottom: 6 }}>
+                Evaluating whether to build custom software or license a SaaS platform
+              </li>
+              <li style={{ marginBottom: 6 }}>
+                Choosing between an internal tool and a commercial vendor for a shared workflow
+              </li>
+              <li style={{ marginBottom: 6 }}>
+                Comparing multiple vendors against an in-house build option
+              </li>
+              <li style={{ marginBottom: 6 }}>
+                Running a procurement or technology selection review with multiple stakeholders
+              </li>
+              <li style={{ marginBottom: 6 }}>
+                Documenting the rationale behind a make-or-buy decision for leadership or audit
+              </li>
+            </ul>
+
+            <h2
+              style={{
+                fontFamily: "'Fraunces', serif",
+                fontSize: 22,
+                fontWeight: 600,
+                color: "#1A2744",
+                marginTop: 32,
+                marginBottom: 14,
+              }}
+            >
+              Frequently asked questions
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+              <div>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: "#1A2744",
+                    marginBottom: 6,
+                  }}
+                >
+                  How do you decide whether to build or buy software?
+                </h3>
+                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                  Score dimensions like strategic differentiation, total cost of ownership, speed
+                  to value, internal capacity, integration complexity, and risk. Collect input from
+                  every affected stakeholder group, then compare aggregated scores. A clear lean
+                  toward higher scores favors buying; a lean toward lower scores favors building
+                  in-house.
+                </p>
+              </div>
+              <div>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: "#1A2744",
+                    marginBottom: 6,
+                  }}
+                >
+                  Is Build or Buy really free?
+                </h3>
+                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                  Yes. Build or Buy is a free, ad-free web tool. Create unlimited rubrics, invite
+                  any number of evaluators, and export results — no signup, no credit card.
+                </p>
+              </div>
+              <div>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: "#1A2744",
+                    marginBottom: 6,
+                  }}
+                >
+                  What scoring scales are available?
+                </h3>
+                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                  Numeric scales (0-2, 1-5, 1-7, 1-10), 5-star ratings, thumbs up/down, and a
+                  0.0-10.0 slider. Every dimension supports N/A when a criterion does not apply.
+                </p>
+              </div>
+              <div>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: "#1A2744",
+                    marginBottom: 6,
+                  }}
+                >
+                  Who should use a build vs. buy rubric?
+                </h3>
+                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                  Product managers, engineering leaders, operations, procurement, finance, HR,
+                  analytics, and executive leadership. Any cross-functional group making a
+                  make-or-buy decision benefits from a shared, structured framework.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* ── Contact CTA ── */}
           <div
             style={{
-              marginTop: 48,
+              marginTop: 36,
               background: "linear-gradient(135deg, #1A2744 0%, #2D3F72 100%)",
               borderRadius: 18,
               padding: "36px 30px",
