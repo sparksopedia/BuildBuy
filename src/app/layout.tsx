@@ -59,14 +59,6 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
-  },
   alternates: {
     canonical: SITE_URL,
   },
