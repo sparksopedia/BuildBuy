@@ -32,6 +32,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
   const [scale, setScale] = useState<Scale>(SCALES[0]);
   const [createdId, setCreatedId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [rubric, setRubric] = useState<Rubric | null>(null);
   const [createError, setCreateError] = useState<string | null>(null);
@@ -59,9 +60,10 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
       dimensions: selDims.map((sid) => allDims.find((d) => d.id === sid)!),
       scale,
       createdAt: new Date().toISOString(),
+      hasPassword: !!password.trim(),
     };
     try {
-      await createRubric(data);
+      await createRubric(data, password.trim() || undefined);
       setCreatedId(id);
       setRubric(data);
       setStep(4);
@@ -220,6 +222,30 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
             />
+
+            <FieldLabel>
+              Rubric Password{" "}
+              <span
+                style={{
+                  fontWeight: 400,
+                  textTransform: "none",
+                  letterSpacing: 0,
+                  color: "var(--text-dim)",
+                  fontSize: 11,
+                }}
+              >
+                (optional)
+              </span>
+            </FieldLabel>
+            <TextInput
+              type="password"
+              placeholder="Protect results from unauthorized access"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <p style={{ fontSize: 12, color: "var(--text-dim)", marginTop: -12, marginBottom: 20, lineHeight: 1.5 }}>
+              When set, a password is required to view results. Anyone with the code can still submit evaluations.
+            </p>
 
             <Divider />
             <FieldLabel>Scoring Scale</FieldLabel>
@@ -799,6 +825,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     `${scale.label}  (N/A · ${scale.buildLabel} = Build → ${scale.buyLabel} = Buy)`,
                   ],
                   ["Dimensions", `${selDims.length} selected`],
+                  ["Password", password.trim() ? "Protected" : "None (public results)"],
                 ].filter(Boolean) as [string, string][]
               ).map(
                 ([k, v]) =>

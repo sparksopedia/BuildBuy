@@ -1,24 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, FieldLabel, TextInput } from "@/components/Primitives";
 import Footer from "@/components/Footer";
-import { getRubric, getResponses, getRubricsByAuthor } from "@/lib/data";
+import { getRubric, getResponses, getRubricsByAuthor, verifyRubricPassword } from "@/lib/data";
 import type { Rubric, EvalResponse } from "@/lib/constants";
 
 interface HomeViewProps {
   onNavigate: (view: string) => void;
   onRubricLoaded: (rubric: Rubric, responses?: EvalResponse[]) => void;
+  initialTab?: "join" | "mine";
 }
 
-export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) {
+export default function HomeView({ onNavigate, onRubricLoaded, initialTab = "join" }: HomeViewProps) {
   const [joinCode, setJoinCode] = useState("");
   const [joinError, setJoinError] = useState("");
-  const [homeTab, setHomeTab] = useState<"join" | "mine">("join");
+  const [homeTab, setHomeTab] = useState<"join" | "mine">(initialTab);
+
+  useEffect(() => {
+    setHomeTab(initialTab);
+  }, [initialTab]);
   const [authorLookup, setAuthorLookup] = useState("");
   const [myRubrics, setMyRubrics] = useState<Rubric[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [lookupLoading, setLookupLoading] = useState(false);
+  const [passwordPrompt, setPasswordPrompt] = useState<Rubric | null>(null);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
   async function handleJoin(mode: "eval" | "results") {
     const code = joinCode.trim().toUpperCase();
@@ -28,6 +37,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
     const r = await getRubric(code);
     if (!r) {
       setJoinError("No rubric found with that code.");
+      setLoading(false);
+      return;
+    }
+    if (mode === "results" && r.hasPassword) {
+      setPasswordPrompt(r);
+      setPasswordInput("");
+      setPasswordError("");
       setLoading(false);
       return;
     }
@@ -52,11 +68,35 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
   }
 
   async function goToResults(r: Rubric) {
+    if (r.hasPassword) {
+      setPasswordPrompt(r);
+      setPasswordInput("");
+      setPasswordError("");
+      return;
+    }
     setLoading(true);
     const resp = await getResponses(r.id);
     onRubricLoaded(r, resp);
     onNavigate("results");
     setLoading(false);
+  }
+
+  async function handlePasswordSubmit() {
+    if (!passwordPrompt || !passwordInput.trim()) return;
+    setPasswordLoading(true);
+    setPasswordError("");
+    const valid = await verifyRubricPassword(passwordPrompt.id, passwordInput.trim());
+    if (!valid) {
+      setPasswordError("Incorrect password.");
+      setPasswordLoading(false);
+      return;
+    }
+    const resp = await getResponses(passwordPrompt.id);
+    onRubricLoaded(passwordPrompt, resp);
+    setPasswordPrompt(null);
+    setPasswordInput("");
+    onNavigate("results");
+    setPasswordLoading(false);
   }
 
   return (
@@ -434,8 +474,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                             }}
                           >
                             <div>
-                              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", display: "flex", alignItems: "center", gap: 5 }}>
                                 {r.title}
+                                {r.hasPassword && (
+                                  <span style={{ fontSize: 11, color: "var(--text-dim)" }} title="Password protected">
+                                    🔒
+                                  </span>
+                                )}
                               </div>
                               <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 2 }}>
                                 {r.org && <span>{r.org} · </span>}
@@ -457,7 +502,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                               onClick={() => goToResults(r)}
                               disabled={loading}
                             >
-                              Results
+                              {r.hasPassword ? "🔒 Results" : "Results"}
                             </button>
                           </div>
                         ))}
@@ -735,6 +780,84 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
           <Footer onContact={() => onNavigate("contact")} />
         </div>
       </div>
+
+      {/* Password prompt modal */}
+      {passwordPrompt && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: 20,
+          }}
+          onClick={() => setPasswordPrompt(null)}
+        >
+          <div
+            style={{
+              background: "var(--bg-card)",
+              borderRadius: 16,
+              padding: 28,
+              maxWidth: 400,
+              width: "100%",
+              boxShadow: "var(--shadow-hover)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3
+              style={{
+                fontFamily: "var(--font-heading)",
+                fontSize: 20,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                marginBottom: 6,
+              }}
+            >
+              Password Required
+            </h3>
+            <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 16, lineHeight: 1.6 }}>
+              Results for <strong style={{ color: "var(--text-secondary)" }}>{passwordPrompt.title}</strong>{" "}
+              are password protected.
+            </p>
+            <TextInput
+              type="password"
+              placeholder="Enter rubric password"
+              value={passwordInput}
+              onChange={(e) => {
+                setPasswordInput(e.target.value);
+                setPasswordError("");
+              }}
+              onKeyDown={(e) => e.key === "Enter" && passwordInput.trim() && handlePasswordSubmit()}
+              style={{ marginBottom: passwordError ? 4 : 12 }}
+            />
+            {passwordError && (
+              <p style={{ fontSize: 13, color: "var(--error-text)", marginBottom: 12 }}>
+                {passwordError}
+              </p>
+            )}
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                className="btn-ghost"
+                style={{ flex: 1 }}
+                onClick={() => setPasswordPrompt(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn-primary"
+                style={{ flex: 1 }}
+                disabled={!passwordInput.trim() || passwordLoading}
+                onClick={handlePasswordSubmit}
+              >
+                {passwordLoading ? "Verifying…" : "Unlock Results"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

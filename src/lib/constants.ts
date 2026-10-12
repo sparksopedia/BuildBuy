@@ -24,6 +24,7 @@ export interface Rubric {
   dimensions: Dimension[];
   scale: Scale;
   createdAt: string;
+  hasPassword: boolean;
 }
 
 export interface EvalResponse {
