@@ -21,10 +21,11 @@ export async function getRubric(id: string): Promise<Rubric | null> {
     dimensions: d.dimensions as Dimension[],
     scale: d.scale as Rubric["scale"],
     createdAt: d.created_at,
+    hasPassword: !!d.has_password,
   };
 }
 
-export async function createRubric(rubric: Rubric): Promise<void> {
+export async function createRubric(rubric: Rubric, password?: string): Promise<void> {
   const res = await fetch(`${BASE}/api/rubrics`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -38,6 +39,7 @@ export async function createRubric(rubric: Rubric): Promise<void> {
       dimensions: rubric.dimensions,
       scale: rubric.scale,
       created_at: rubric.createdAt,
+      password: password || undefined,
     }),
   });
 
@@ -61,7 +63,19 @@ export async function getRubricsByAuthor(authorName: string): Promise<Rubric[]> 
     dimensions: d.dimensions as Dimension[],
     scale: d.scale as Rubric["scale"],
     createdAt: d.created_at as string,
+    hasPassword: !!(d.has_password),
   }));
+}
+
+export async function verifyRubricPassword(rubricId: string, password: string): Promise<boolean> {
+  const res = await fetch(`${BASE}/api/rubrics/verify-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rubric_id: rubricId, password }),
+  });
+  if (!res.ok) return false;
+  const data = await res.json();
+  return !!data.valid;
 }
 
 // ── Responses ────────────────────────────────────────────────────

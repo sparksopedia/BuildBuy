@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS rubrics (
   author_key   TEXT NOT NULL,
   dimensions   JSONB NOT NULL DEFAULT '[]',
   scale        JSONB NOT NULL DEFAULT '{}',
-  created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  password_hash  TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_rubrics_author ON rubrics (LOWER(author_key));
