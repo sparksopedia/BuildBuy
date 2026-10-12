@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 const SITE_URL = "https://buildorbuy.app";
@@ -215,7 +216,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
