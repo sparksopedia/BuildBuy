@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { Card } from "@/components/Primitives";
 import Footer from "@/components/Footer";
-import { subscribeToResponses, getResponses } from "@/lib/supabase-data";
+import { subscribeToResponses, getResponses } from "@/lib/data";
 import { exportCSV, exportPDF } from "@/lib/export";
 import { pct, getVerdict } from "@/lib/utils";
 import type { Rubric, EvalResponse } from "@/lib/constants";
