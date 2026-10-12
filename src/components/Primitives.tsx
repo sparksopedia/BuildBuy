@@ -12,10 +12,10 @@ export function Card({
   return (
     <div
       style={{
-        background: "#fff",
+        background: "var(--bg-card)",
         borderRadius: 16,
         padding: 28,
-        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.05)",
+        boxShadow: "var(--shadow-card)",
         marginBottom: 16,
         ...style,
       }}
@@ -31,7 +31,7 @@ export function FieldLabel({ children }: { children: React.ReactNode }) {
       style={{
         fontSize: 11,
         fontWeight: 700,
-        color: "#6B7280",
+        color: "var(--text-muted)",
         textTransform: "uppercase",
         letterSpacing: 0.8,
         marginBottom: 6,
@@ -52,10 +52,11 @@ export function TextInput({
         display: "block",
         width: "100%",
         padding: "10px 14px",
-        border: "1.5px solid #E5E7EB",
+        border: "1.5px solid var(--border-default)",
         borderRadius: 9,
         fontSize: 15,
-        color: "#1A2744",
+        color: "var(--text-primary)",
+        background: "var(--bg-input)",
         marginBottom: 16,
         ...style,
       }}
@@ -65,5 +66,5 @@ export function TextInput({
 }
 
 export function Divider() {
-  return <div style={{ borderTop: "1px solid #F3F4F6", margin: "20px 0" }} />;
+  return <div style={{ borderTop: "1px solid var(--border-light)", margin: "20px 0" }} />;
 }

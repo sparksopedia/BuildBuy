@@ -59,8 +59,8 @@ export default function EvaluateView({
     <div
       style={{
         minHeight: "100vh",
-        background: "#F4F6FA",
-        fontFamily: "'DM Sans', sans-serif",
+        background: "var(--bg-page)",
+        fontFamily: "var(--font-body)",
         padding: "28px 20px",
       }}
     >
@@ -69,29 +69,29 @@ export default function EvaluateView({
           <button
             className="nav-back"
             onClick={() => onNavigate("home")}
-            style={{ fontSize: 13, color: "#9CA3AF", background: "none", border: "none" }}
+            style={{ fontSize: 13, color: "var(--text-dim)", background: "none", border: "none" }}
           >
             ← Home
           </button>
           <div style={{ flex: 1 }}>
             <div
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 17,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
               }}
             >
               {rubric.org && (
-                <span style={{ fontWeight: 400, color: "#9CA3AF" }}>{rubric.org} · </span>
+                <span style={{ fontWeight: 400, color: "var(--text-dim)" }}>{rubric.org} · </span>
               )}
               {rubric.title}
             </div>
-            <div style={{ fontSize: 12, color: "#9CA3AF" }}>
+            <div style={{ fontSize: 12, color: "var(--text-dim)" }}>
               by {rubric.authorName} ·{" "}
               <span
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "var(--font-mono)",
                   letterSpacing: 1,
                 }}
               >
@@ -110,13 +110,13 @@ export default function EvaluateView({
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: 0.8,
-                  color: "#4B61A0",
+                  color: "var(--badge-text)",
                   marginBottom: 8,
                 }}
               >
                 About This Evaluation
               </div>
-              <p style={{ fontSize: 14, color: "#2D3F72", lineHeight: 1.7 }}>
+              <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.7 }}>
                 This rubric evaluates whether <strong>{rubric.title}</strong> is better addressed
                 through an internally built solution or a commercial product. Score each dimension
                 based on your knowledge and perspective.
@@ -125,11 +125,11 @@ export default function EvaluateView({
                 <p
                   style={{
                     fontSize: 13,
-                    color: "#4B61A0",
+                    color: "var(--badge-text)",
                     marginTop: 8,
                     lineHeight: 1.65,
                     fontStyle: "italic",
-                    borderTop: "1px solid #C7D4F5",
+                    borderTop: "1px solid var(--bg-info-border)",
                     paddingTop: 8,
                   }}
                 >
@@ -144,30 +144,30 @@ export default function EvaluateView({
                   fontSize: 13,
                   marginTop: 10,
                   paddingTop: 10,
-                  borderTop: "1px solid #C7D4F5",
+                  borderTop: "1px solid var(--bg-info-border)",
                 }}
               >
                 <span>
                   Scale:{" "}
                   <strong
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      color: "#1A2744",
+                      fontFamily: "var(--font-mono)",
+                      color: "var(--text-primary)",
                     }}
                   >
                     {rubric.scale.label}
                   </strong>
                 </span>
-                <span style={{ color: "#C7D4F5" }}>·</span>
+                <span style={{ color: "var(--bg-info-border)" }}>·</span>
                 <span>
-                  <strong style={{ color: "#9CA3AF" }}>N/A</strong> = cannot assess
+                  <strong style={{ color: "var(--text-dim)" }}>N/A</strong> = cannot assess
                 </span>
-                <span style={{ color: "#C7D4F5" }}>·</span>
-                <span style={{ color: "#1D4ED8", fontWeight: 600 }}>
+                <span style={{ color: "var(--bg-info-border)" }}>·</span>
+                <span style={{ color: "var(--build-color)", fontWeight: 600 }}>
                   {rubric.scale.buildLabel} = Build internally
                 </span>
-                <span style={{ color: "#C7D4F5" }}>·</span>
-                <span style={{ color: "#15803D", fontWeight: 600 }}>
+                <span style={{ color: "var(--bg-info-border)" }}>·</span>
+                <span style={{ color: "var(--buy-color)", fontWeight: 600 }}>
                   {rubric.scale.buyLabel} = Buy commercially
                 </span>
               </div>
@@ -187,7 +187,7 @@ export default function EvaluateView({
                   fontWeight: 400,
                   textTransform: "none",
                   letterSpacing: 0,
-                  color: "#9CA3AF",
+                  color: "var(--text-dim)",
                   fontSize: 11,
                 }}
               >
@@ -201,12 +201,12 @@ export default function EvaluateView({
                 display: "block",
                 width: "100%",
                 padding: "10px 14px",
-                border: "1.5px solid #E5E7EB",
+                border: "1.5px solid var(--border-default)",
                 borderRadius: 9,
                 fontSize: 15,
-                color: evalRole ? "#1A2744" : "#9CA3AF",
+                color: evalRole ? "var(--text-primary)" : "var(--text-dim)",
                 marginBottom: 20,
-                background: "#fff",
+                background: "var(--bg-input)",
               }}
             >
               <option value="">Select your role…</option>
@@ -217,7 +217,7 @@ export default function EvaluateView({
               ))}
             </select>
 
-            <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: 8, marginBottom: 20 }}>
+            <div style={{ borderTop: "1px solid var(--border-light)", paddingTop: 8, marginBottom: 20 }}>
               {rubric.dimensions.map((d, i) => (
                 <ScoreRow
                   key={d.id}
@@ -237,7 +237,7 @@ export default function EvaluateView({
                   fontWeight: 400,
                   textTransform: "none",
                   letterSpacing: 0,
-                  color: "#9CA3AF",
+                  color: "var(--text-dim)",
                   fontSize: 11,
                 }}
               >
@@ -253,26 +253,27 @@ export default function EvaluateView({
                 display: "block",
                 width: "100%",
                 padding: "10px 14px",
-                border: "1.5px solid #E5E7EB",
+                border: "1.5px solid var(--border-default)",
                 borderRadius: 9,
                 fontSize: 14,
-                color: "#1A2744",
+                color: "var(--text-primary)",
+                background: "var(--bg-input)",
                 lineHeight: 1.6,
                 resize: "vertical",
                 marginBottom: 20,
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
               }}
             />
 
             {submitError && (
               <div
                 style={{
-                  background: "#FEF2F2",
-                  border: "1px solid #FECACA",
+                  background: "var(--bg-error)",
+                  border: "1px solid var(--bg-error-border)",
                   borderRadius: 9,
                   padding: "10px 14px",
                   fontSize: 13,
-                  color: "#DC2626",
+                  color: "var(--error-text)",
                   marginBottom: 16,
                 }}
               >
@@ -290,19 +291,19 @@ export default function EvaluateView({
           </Card>
         ) : (
           <Card style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 36, color: "#16A34A", marginBottom: 14 }}>◈</div>
+            <div style={{ fontSize: 36, color: "var(--success-text)", marginBottom: 14 }}>◈</div>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 24,
                 fontWeight: 700,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 8,
               }}
             >
               Submitted
             </h2>
-            <p style={{ fontSize: 15, color: "#6B7280", marginBottom: 28 }}>
+            <p style={{ fontSize: 15, color: "var(--text-muted)", marginBottom: 28 }}>
               Thanks, {evalName}. Your evaluation has been recorded and will be included in the
               aggregate results.
             </p>

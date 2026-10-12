@@ -42,8 +42,8 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
     <div
       style={{
         minHeight: "100vh",
-        background: "#F4F6FA",
-        fontFamily: "'DM Sans', sans-serif",
+        background: "var(--bg-page)",
+        fontFamily: "var(--font-body)",
         padding: "28px 20px",
       }}
     >
@@ -52,16 +52,16 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
           <button
             className="nav-back"
             onClick={() => onNavigate("home")}
-            style={{ fontSize: 13, color: "#9CA3AF", background: "none", border: "none" }}
+            style={{ fontSize: 13, color: "var(--text-dim)", background: "none", border: "none" }}
           >
             ← Home
           </button>
           <span
             style={{
-              fontFamily: "'Fraunces', serif",
+              fontFamily: "var(--font-heading)",
               fontSize: 18,
               fontWeight: 600,
-              color: "#1A2744",
+              color: "var(--text-primary)",
             }}
           >
             Contact
@@ -70,19 +70,19 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
 
         {contactStatus === "sent" ? (
           <Card style={{ textAlign: "center", padding: 40 }}>
-            <div style={{ fontSize: 36, color: "#16A34A", marginBottom: 14 }}>◈</div>
+            <div style={{ fontSize: 36, color: "var(--success-text)", marginBottom: 14 }}>◈</div>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 700,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 10,
               }}
             >
               Message Sent
             </h2>
-            <p style={{ fontSize: 15, color: "#6B7280", marginBottom: 24 }}>
+            <p style={{ fontSize: 15, color: "var(--text-muted)", marginBottom: 24 }}>
               Thanks for reaching out — we&apos;ll get back to you soon.
             </p>
             <button className="btn-primary" onClick={() => onNavigate("home")}>
@@ -93,10 +93,10 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
           <Card>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 6,
               }}
             >
@@ -105,7 +105,7 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
             <p
               style={{
                 fontSize: 14,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 24,
                 lineHeight: 1.65,
               }}
@@ -116,12 +116,12 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
             {contactStatus === "error" && (
               <div
                 style={{
-                  background: "#FEF2F2",
-                  border: "1px solid #FECACA",
+                  background: "var(--bg-error)",
+                  border: "1px solid var(--bg-error-border)",
                   borderRadius: 9,
                   padding: "10px 14px",
                   fontSize: 13,
-                  color: "#DC2626",
+                  color: "var(--error-text)",
                   marginBottom: 16,
                 }}
               >
@@ -152,7 +152,7 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
                   fontWeight: 400,
                   textTransform: "none",
                   letterSpacing: 0,
-                  color: "#9CA3AF",
+                  color: "var(--text-dim)",
                   fontSize: 11,
                 }}
               >
@@ -175,14 +175,15 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
                 display: "block",
                 width: "100%",
                 padding: "10px 14px",
-                border: "1.5px solid #E5E7EB",
+                border: "1.5px solid var(--border-default)",
                 borderRadius: 9,
                 fontSize: 14,
-                color: "#1A2744",
+                color: "var(--text-primary)",
+                background: "var(--bg-input)",
                 lineHeight: 1.6,
                 resize: "vertical",
                 marginBottom: 20,
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
               }}
             />
 

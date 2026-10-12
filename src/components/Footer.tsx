@@ -1,5 +1,7 @@
 "use client";
 
+import ThemeToggle from "./ThemeToggle";
+
 interface FooterProps {
   onContact: () => void;
 }
@@ -8,7 +10,7 @@ export default function Footer({ onContact }: FooterProps) {
   return (
     <div
       style={{
-        borderTop: "1px solid #E5E7EB",
+        borderTop: "1px solid var(--border-default)",
         marginTop: 40,
         padding: "24px 20px 32px",
         display: "flex",
@@ -28,10 +30,10 @@ export default function Footer({ onContact }: FooterProps) {
       >
         <span
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: 11,
-            background: "#1A2744",
-            color: "#fff",
+            background: "var(--brand-navy)",
+            color: "var(--bg-card)",
             padding: "3px 8px",
             borderRadius: 4,
             letterSpacing: 1,
@@ -39,26 +41,26 @@ export default function Footer({ onContact }: FooterProps) {
         >
           B/B
         </span>
-        <span style={{ color: "#E5E7EB" }}>·</span>
+        <span style={{ color: "var(--border-default)" }}>·</span>
         <button
           onClick={onContact}
           style={{
-            background: "#1A2744",
-            color: "#fff",
+            background: "var(--brand-navy)",
+            color: "var(--bg-card)",
             border: "none",
             borderRadius: 7,
             padding: "7px 16px",
             fontSize: 13,
             fontWeight: 600,
             cursor: "pointer",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             transition: "background 0.15s",
           }}
           className="footer-contact-btn"
         >
           Contact Us
         </button>
-        <span style={{ color: "#E5E7EB" }}>·</span>
+        <span style={{ color: "var(--border-default)" }}>·</span>
         <a
           href="https://donate.stripe.com/eVq3cxbrpbp732g8Ra0Ny00"
           target="_blank"
@@ -68,7 +70,7 @@ export default function Footer({ onContact }: FooterProps) {
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            background: "#5B7BB4",
+            background: "var(--brand-accent)",
             color: "#fff",
             border: "none",
             borderRadius: 7,
@@ -82,10 +84,12 @@ export default function Footer({ onContact }: FooterProps) {
         >
           ♥ Support
         </a>
+        <span style={{ color: "var(--border-default)" }}>·</span>
+        <ThemeToggle />
       </div>
-      <p style={{ fontSize: 12, color: "#D1D5DB", textAlign: "center" }}>
+      <p style={{ fontSize: 12, color: "var(--text-faint)", textAlign: "center" }}>
         A free tool for product and strategy teams. ·{" "}
-        <strong style={{ color: "#9CA3AF" }}>Build or Buy</strong>
+        <strong style={{ color: "var(--text-dim)" }}>Build or Buy</strong>
       </p>
     </div>
   );

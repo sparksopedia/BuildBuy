@@ -63,19 +63,18 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
     <div
       style={{
         minHeight: "100vh",
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "var(--font-body)",
       }}
     >
       {/* ── Hero Section ── */}
       <div
         style={{
-          background: "linear-gradient(160deg, #1A2744 0%, #243660 50%, #1A2744 100%)",
+          background: "var(--hero-bg)",
           padding: "52px 20px 60px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Subtle decorative circles */}
         <div
           style={{
             position: "absolute",
@@ -84,7 +83,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             width: 280,
             height: 280,
             borderRadius: "50%",
-            background: "rgba(200,146,42,0.06)",
+            background: "var(--hero-circle-1)",
             pointerEvents: "none",
           }}
         />
@@ -96,7 +95,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             width: 180,
             height: 180,
             borderRadius: "50%",
-            background: "rgba(255,255,255,0.03)",
+            background: "var(--hero-circle-2)",
             pointerEvents: "none",
           }}
         />
@@ -105,42 +104,42 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 36 }}>
             <span
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontWeight: 600,
                 fontSize: 12,
-                background: "rgba(255,255,255,0.12)",
-                color: "#fff",
+                background: "var(--hero-badge-bg)",
+                color: "var(--hero-text)",
                 padding: "4px 9px",
                 borderRadius: 5,
                 letterSpacing: 1,
-                border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid var(--hero-badge-border)",
               }}
             >
               B/B
             </span>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>
+            <span style={{ fontSize: 13, color: "var(--hero-text-faint)", fontWeight: 500 }}>
               Build vs. Buy Decision Tool
             </span>
           </div>
 
           <h1
             style={{
-              fontFamily: "'Fraunces', serif",
+              fontFamily: "var(--font-heading)",
               fontSize: 44,
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--hero-text)",
               lineHeight: 1.15,
               marginBottom: 18,
             }}
           >
             The free build vs. buy{" "}
-            <span style={{ color: "#7BA3D4" }}>decision framework.</span>
+            <span style={{ color: "var(--brand-light-blue)" }}>decision framework.</span>
           </h1>
 
           <p
             style={{
               fontSize: 17,
-              color: "rgba(255,255,255,0.7)",
+              color: "var(--hero-text-muted)",
               lineHeight: 1.7,
               maxWidth: 560,
               marginBottom: 0,
@@ -156,7 +155,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
       </div>
 
       {/* ── How It Works ── */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #F3F4F6" }}>
+      <div style={{ background: "var(--bg-card)", borderBottom: "1px solid var(--border-light)" }}>
         <div
           style={{
             maxWidth: 720,
@@ -183,14 +182,14 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                     width: 36,
                     height: 36,
                     borderRadius: "50%",
-                    background: "#1A2744",
-                    color: "#fff",
+                    background: "var(--brand-navy)",
+                    color: "var(--bg-card)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 14,
                     fontWeight: 700,
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "var(--font-mono)",
                     marginBottom: 10,
                   }}
                 >
@@ -198,16 +197,16 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Fraunces', serif",
+                    fontFamily: "var(--font-heading)",
                     fontSize: 16,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 4,
                   }}
                 >
                   {step.title}
                 </div>
-                <div style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.5 }}>
+                <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>
                   {step.desc}
                 </div>
               </div>
@@ -217,24 +216,24 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
       </div>
 
       {/* ── Main Content ── */}
-      <div style={{ background: "#F4F6FA", padding: "36px 20px 0" }}>
+      <div style={{ background: "var(--bg-page)", padding: "36px 20px 0" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           {/* Scoring info box */}
           <div
             className="info-box"
-            style={{ marginBottom: 28, background: "#fff", border: "1px solid #E5E7EB" }}
+            style={{ marginBottom: 28, background: "var(--bg-card)", border: "1px solid var(--border-default)" }}
           >
-            <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.75, marginBottom: 8 }}>
+            <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: 8 }}>
               Designed for{" "}
               <strong>Product, Engineering, Operations, and Business</strong> stakeholders to apply
               consistently — across evaluations, vendors, and teams.
             </p>
-            <p style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.65 }}>
+            <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.65 }}>
               Each rubric is divided into dimensions with specific criteria.
-              <span style={{ color: "#1D4ED8", fontWeight: 600 }}>
+              <span style={{ color: "var(--build-color)", fontWeight: 600 }}>
                 {" "}Lower scores favor building internally
               </span>;
-              <span style={{ color: "#15803D", fontWeight: 600 }}>
+              <span style={{ color: "var(--buy-color)", fontWeight: 600 }}>
                 {" "}higher scores favor a commercial solution
               </span>
               . N/A is always available when a dimension doesn&apos;t apply.
@@ -252,16 +251,16 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <div
               className="home-card"
               style={{
-                background: "#1A2744",
+                background: "var(--brand-navy)",
                 borderRadius: 18,
                 padding: 30,
-                color: "#fff",
+                color: "var(--bg-card)",
               }}
             >
               <div style={{ fontSize: 22, marginBottom: 14 }}>✦</div>
               <h2
                 style={{
-                  fontFamily: "'Fraunces', serif",
+                  fontFamily: "var(--font-heading)",
                   fontSize: 20,
                   fontWeight: 600,
                   marginBottom: 10,
@@ -272,7 +271,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               <p
                 style={{
                   fontSize: 14,
-                  color: "#94A3B8",
+                  color: "var(--text-body)",
                   lineHeight: 1.65,
                   marginBottom: 24,
                 }}
@@ -297,14 +296,14 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <div
               className="home-card"
               style={{
-                background: "#fff",
+                background: "var(--bg-card)",
                 borderRadius: 18,
                 padding: 30,
-                boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.05)",
+                boxShadow: "var(--shadow-card)",
               }}
             >
               <div
-                style={{ display: "flex", borderBottom: "1px solid #F3F4F6", marginBottom: 20 }}
+                style={{ display: "flex", borderBottom: "1px solid var(--border-light)", marginBottom: 20 }}
               >
                 <button
                   className={`tab-btn${homeTab === "join" ? " tab-on" : ""}`}
@@ -325,7 +324,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   <p
                     style={{
                       fontSize: 14,
-                      color: "#6B7280",
+                      color: "var(--text-muted)",
                       lineHeight: 1.65,
                       marginBottom: 16,
                     }}
@@ -349,7 +348,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                       e.key === "Enter" && joinCode.length >= 4 && handleJoin("eval")
                     }
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                       letterSpacing: 4,
                       fontSize: 18,
                       textAlign: "center",
@@ -357,7 +356,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                     }}
                   />
                   {joinError && (
-                    <p style={{ fontSize: 13, color: "#DC2626", marginBottom: 10 }}>
+                    <p style={{ fontSize: 13, color: "var(--error-text)", marginBottom: 10 }}>
                       {joinError}
                     </p>
                   )}
@@ -387,7 +386,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   <p
                     style={{
                       fontSize: 14,
-                      color: "#6B7280",
+                      color: "var(--text-muted)",
                       lineHeight: 1.65,
                       marginBottom: 16,
                     }}
@@ -415,7 +414,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   </button>
                   {myRubrics !== null &&
                     (myRubrics.length === 0 ? (
-                      <p style={{ fontSize: 13, color: "#9CA3AF", textAlign: "center" }}>
+                      <p style={{ fontSize: 13, color: "var(--text-dim)", textAlign: "center" }}>
                         No rubrics found for &ldquo;{authorLookup}&rdquo;.
                       </p>
                     ) : (
@@ -424,8 +423,8 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                           <div
                             key={r.id}
                             style={{
-                              background: "#F9FAFB",
-                              border: "1px solid #E5E7EB",
+                              background: "var(--bg-card-alt)",
+                              border: "1px solid var(--border-default)",
                               borderRadius: 10,
                               padding: "10px 14px",
                               display: "flex",
@@ -435,14 +434,14 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                             }}
                           >
                             <div>
-                              <div style={{ fontSize: 13, fontWeight: 600, color: "#1A2744" }}>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>
                                 {r.title}
                               </div>
-                              <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 2 }}>
+                              <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 2 }}>
                                 {r.org && <span>{r.org} · </span>}
                                 <span
                                   style={{
-                                    fontFamily: "'JetBrains Mono', monospace",
+                                    fontFamily: "var(--font-mono)",
                                     letterSpacing: 0.5,
                                   }}
                                 >
@@ -473,24 +472,24 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
           <section
             style={{
               marginTop: 48,
-              background: "#fff",
-              border: "1px solid #E5E7EB",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border-default)",
               borderRadius: 18,
               padding: "36px 30px",
             }}
           >
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 24,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 14,
               }}
             >
               What is a build vs. buy decision?
             </h2>
-            <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 14 }}>
+            <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: 14 }}>
               A <strong>build vs. buy decision</strong> (sometimes called a{" "}
               <strong>make or buy analysis</strong>) is the choice between developing a capability
               internally or purchasing a commercial off-the-shelf solution. Teams weigh cost,
@@ -498,7 +497,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               and opportunity cost. Without a shared framework, these conversations devolve into
               gut-feel debates — the loudest voice wins and the decision rarely sticks.
             </p>
-            <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 0 }}>
+            <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: 0 }}>
               <strong>Build or Buy</strong> gives product, engineering, operations, finance, and
               leadership stakeholders a structured rubric to score each dimension of the decision.
               Scores aggregate across evaluators so you can see where alignment is strong, where
@@ -508,10 +507,10 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
 
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginTop: 32,
                 marginBottom: 14,
               }}
@@ -521,7 +520,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <ul
               style={{
                 fontSize: 15,
-                color: "#374151",
+                color: "var(--text-secondary)",
                 lineHeight: 1.75,
                 paddingLeft: 22,
                 marginBottom: 0,
@@ -546,10 +545,10 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
 
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginTop: 32,
                 marginBottom: 14,
               }}
@@ -562,13 +561,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   style={{
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 6,
                   }}
                 >
                   How do you decide whether to build or buy software?
                 </h3>
-                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                <p style={{ fontSize: 14, color: "var(--text-body)", lineHeight: 1.7 }}>
                   Score dimensions like strategic differentiation, total cost of ownership, speed
                   to value, internal capacity, integration complexity, and risk. Collect input from
                   every affected stakeholder group, then compare aggregated scores. A clear lean
@@ -581,13 +580,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   style={{
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 6,
                   }}
                 >
                   Is Build or Buy really free?
                 </h3>
-                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                <p style={{ fontSize: 14, color: "var(--text-body)", lineHeight: 1.7 }}>
                   Yes. Build or Buy is a free, ad-free web tool. Create unlimited rubrics, invite
                   any number of evaluators, and export results — no signup, no credit card.
                 </p>
@@ -597,13 +596,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   style={{
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 6,
                   }}
                 >
                   What scoring scales are available?
                 </h3>
-                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                <p style={{ fontSize: 14, color: "var(--text-body)", lineHeight: 1.7 }}>
                   Numeric scales (0-2, 1-5, 1-7, 1-10), 5-star ratings, thumbs up/down, and a
                   0.0-10.0 slider. Every dimension supports N/A when a criterion does not apply.
                 </p>
@@ -613,13 +612,13 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                   style={{
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 6,
                   }}
                 >
                   Who should use a build vs. buy rubric?
                 </h3>
-                <p style={{ fontSize: 14, color: "#4B5563", lineHeight: 1.7 }}>
+                <p style={{ fontSize: 14, color: "var(--text-body)", lineHeight: 1.7 }}>
                   Product managers, engineering leaders, operations, procurement, finance, HR,
                   analytics, and executive leadership. Any cross-functional group making a
                   make-or-buy decision benefits from a shared, structured framework.
@@ -632,7 +631,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
           <div
             style={{
               marginTop: 36,
-              background: "linear-gradient(135deg, #1A2744 0%, #2D3F72 100%)",
+              background: "var(--hero-bg)",
               borderRadius: 18,
               padding: "36px 30px",
               textAlign: "center",
@@ -648,16 +647,16 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                 width: 120,
                 height: 120,
                 borderRadius: "50%",
-                background: "rgba(200,146,42,0.1)",
+                background: "var(--hero-circle-1)",
                 pointerEvents: "none",
               }}
             />
             <h3
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#fff",
+                color: "var(--hero-text)",
                 marginBottom: 8,
                 position: "relative",
               }}
@@ -667,7 +666,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <p
               style={{
                 fontSize: 15,
-                color: "rgba(255,255,255,0.65)",
+                color: "var(--hero-text-muted)",
                 lineHeight: 1.65,
                 maxWidth: 440,
                 margin: "0 auto 20px",
@@ -680,7 +679,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
             <button
               onClick={() => onNavigate("contact")}
               style={{
-                background: "#5B7BB4",
+                background: "var(--brand-accent)",
                 color: "#fff",
                 border: "none",
                 borderRadius: 10,
@@ -707,7 +706,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
               gap: 10,
             }}
           >
-            <p style={{ fontSize: 14, color: "#9CA3AF", textAlign: "center" }}>
+            <p style={{ fontSize: 14, color: "var(--text-dim)", textAlign: "center" }}>
               Find this useful? Help keep it free and ad-free.
             </p>
             <a
@@ -719,7 +718,7 @@ export default function HomeView({ onNavigate, onRubricLoaded }: HomeViewProps) 
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 8,
-                background: "#5B7BB4",
+                background: "var(--brand-accent)",
                 color: "#fff",
                 borderRadius: 10,
                 padding: "11px 22px",
