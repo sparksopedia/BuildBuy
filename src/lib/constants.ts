@@ -54,7 +54,7 @@ export const DIMS: Dimension[] = [
 ];
 
 export const SCALES: Scale[] = [
-  { label: "0–3", min: 0, max: 3, note: "Simple 4-point", buildLabel: "0", buyLabel: "3" },
+  { label: "0–2", min: 0, max: 2, note: "Simple 3-point", buildLabel: "0", buyLabel: "2" },
   { label: "1–5", min: 1, max: 5, note: "Standard 5-point", buildLabel: "1", buyLabel: "5" },
   { label: "1–7", min: 1, max: 7, note: "Nuanced 7-point", buildLabel: "1", buyLabel: "7" },
   { label: "1–10", min: 1, max: 10, note: "Detailed 10-point", buildLabel: "1", buyLabel: "10" },
@@ -64,11 +64,14 @@ export const SCALES: Scale[] = [
 ];
 
 export const STAKEHOLDER_ROLES = [
-  "Product",
-  "Engineering",
-  "Operations",
+  "Analytics",
   "Business / Strategy",
+  "Engineering",
   "Finance",
+  "Human Resources",
+  "Leadership",
   "Legal / Compliance",
+  "Operations",
+  "Product",
   "Other",
 ];

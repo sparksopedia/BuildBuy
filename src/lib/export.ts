@@ -182,7 +182,7 @@ export async function exportPDF(rubric: Rubric, responses: EvalResponse[]) {
     M = 16,
     COL = W - M * 2;
   const NAVY: [number, number, number] = [26, 39, 68],
-    AMBER: [number, number, number] = [200, 146, 42],
+    AMBER: [number, number, number] = [91, 123, 180],
     MID: [number, number, number] = [107, 114, 128];
   const LGRAY: [number, number, number] = [229, 231, 235],
     FGRAY: [number, number, number] = [249, 250, 251],

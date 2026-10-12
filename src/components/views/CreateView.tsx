@@ -115,7 +115,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   justifyContent: "center",
                   fontSize: 11,
                   fontWeight: 700,
-                  background: step > n ? "#C8922A" : step === n ? "#1A2744" : "#E5E7EB",
+                  background: step > n ? "#5B7BB4" : step === n ? "#1A2744" : "#E5E7EB",
                   color: step >= n ? "#fff" : "#9CA3AF",
                   transition: "all 0.2s",
                 }}
@@ -167,7 +167,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               </span>
             </FieldLabel>
             <TextInput
-              placeholder="e.g. ReUp Education, Platform Engineering"
+              placeholder="e.g. Acme Corp, Platform Engineering"
               value={org}
               onChange={(e) => setOrg(e.target.value)}
             />
@@ -353,7 +353,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               </span>{" "}
               selected
               {customDims.length > 0 && (
-                <span style={{ marginLeft: 8, color: "#C8922A", fontWeight: 600 }}>
+                <span style={{ marginLeft: 8, color: "#5B7BB4", fontWeight: 600 }}>
                   · {customDims.filter((d) => selDims.includes(d.id)).length} custom
                 </span>
               )}
@@ -460,9 +460,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             width: "100%",
                             padding: 12,
                             paddingRight: 28,
-                            border: "1.5px solid #C8922A",
+                            border: "1.5px solid #5B7BB4",
                             borderRadius: 10,
-                            background: sel ? "#FFF8EC" : "#FFFDF7",
+                            background: sel ? "#EDF2FA" : "#F5F8FC",
                             textAlign: "left",
                             display: "flex",
                             flexDirection: "column",
@@ -475,7 +475,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             <span
                               style={{
                                 fontSize: 12,
-                                color: sel ? "#C8922A" : "#D1D5DB",
+                                color: sel ? "#5B7BB4" : "#D1D5DB",
                                 fontWeight: 700,
                               }}
                             >
@@ -485,8 +485,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                               style={{
                                 fontSize: 9,
                                 fontWeight: 700,
-                                background: "#FDE8BB",
-                                color: "#92640A",
+                                background: "#D4DEF0",
+                                color: "#3D5A8C",
                                 padding: "1px 5px",
                                 borderRadius: 3,
                                 letterSpacing: 0.3,
@@ -553,7 +553,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     style={{
                       fontSize: 11,
                       fontWeight: 700,
-                      color: "#C8922A",
+                      color: "#5B7BB4",
                       textTransform: "uppercase",
                       letterSpacing: 0.8,
                       marginBottom: 10,
@@ -588,9 +588,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                 width: "100%",
                                 padding: 12,
                                 paddingRight: 28,
-                                border: "1.5px dashed #C8922A",
+                                border: "1.5px dashed #5B7BB4",
                                 borderRadius: 10,
-                                background: "#FFFDF7",
+                                background: "#F5F8FC",
                                 textAlign: "left",
                                 display: "flex",
                                 flexDirection: "column",
@@ -604,8 +604,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                   style={{
                                     fontSize: 9,
                                     fontWeight: 700,
-                                    background: "#FDE8BB",
-                                    color: "#92640A",
+                                    background: "#D4DEF0",
+                                    color: "#3D5A8C",
                                     padding: "1px 5px",
                                     borderRadius: 3,
                                     letterSpacing: 0.3,
@@ -863,8 +863,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                         style={{
                           fontSize: 9,
                           fontWeight: 700,
-                          background: "#FDE8BB",
-                          color: "#92640A",
+                          background: "#D4DEF0",
+                          color: "#3D5A8C",
                           padding: "2px 6px",
                           borderRadius: 3,
                           letterSpacing: 0.3,
@@ -907,7 +907,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
         {/* Step 4 — created */}
         {step === 4 && createdId && rubric && (
           <Card style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 32, color: "#C8922A", marginBottom: 12 }}>✦</div>
+            <div style={{ fontSize: 32, color: "#5B7BB4", marginBottom: 12 }}>✦</div>
             <h2
               style={{
                 fontFamily: "'Fraunces', serif",

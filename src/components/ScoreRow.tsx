@@ -97,7 +97,7 @@ function StarsInput({ value, onChange }: { value: number | "na" | undefined; onC
                 cursor: "pointer",
                 fontSize: 28,
                 lineHeight: 1,
-                color: filled ? "#C8922A" : "#D1D5DB",
+                color: filled ? "#5B7BB4" : "#D1D5DB",
                 transition: "color 0.1s, transform 0.1s",
                 transform: filled ? "scale(1.1)" : "scale(1)",
                 padding: 0,
@@ -114,7 +114,7 @@ function StarsInput({ value, onChange }: { value: number | "na" | undefined; onC
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: 13,
             fontWeight: 600,
-            color: "#C8922A",
+            color: "#5B7BB4",
             marginLeft: 8,
           }}
         >
