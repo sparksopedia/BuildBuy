@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card, FieldLabel, TextInput } from "@/components/Primitives";
 import Footer from "@/components/Footer";
-import { getRubric, getResponses, getRubricsByAuthor } from "@/lib/supabase-data";
+import { getRubric, getResponses, getRubricsByAuthor } from "@/lib/data";
 import type { Rubric, EvalResponse } from "@/lib/constants";
 
 interface HomeViewProps {

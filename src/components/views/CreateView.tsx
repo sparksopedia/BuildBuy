@@ -10,7 +10,7 @@ import {
   getSavedCustomDimensions,
   saveCustomDimension,
   deleteCustomDimension,
-} from "@/lib/supabase-data";
+} from "@/lib/data";
 
 interface CreateViewProps {
   onNavigate: (view: string) => void;

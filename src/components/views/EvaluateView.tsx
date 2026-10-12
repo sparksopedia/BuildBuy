@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, FieldLabel, TextInput } from "@/components/Primitives";
 import ScoreRow from "@/components/ScoreRow";
 import Footer from "@/components/Footer";
-import { submitResponse, getResponses } from "@/lib/supabase-data";
+import { submitResponse, getResponses } from "@/lib/data";
 import { STAKEHOLDER_ROLES, type Rubric, type EvalResponse } from "@/lib/constants";
 
 interface EvaluateViewProps {

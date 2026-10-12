@@ -6,7 +6,7 @@ import CreateView from "@/components/views/CreateView";
 import EvaluateView from "@/components/views/EvaluateView";
 import ResultsView from "@/components/views/ResultsView";
 import ContactView from "@/components/views/ContactView";
-import { getRubric } from "@/lib/supabase-data";
+import { getRubric } from "@/lib/data";
 import type { Rubric, EvalResponse } from "@/lib/constants";
 
 type View = "home" | "create" | "evaluate" | "evaluate-as-author" | "results" | "contact";
