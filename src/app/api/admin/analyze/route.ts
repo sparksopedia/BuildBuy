@@ -107,7 +107,11 @@ Be specific and reference actual data points. Use rubric IDs when referencing sp
   }
 
   try {
-    const client = new Anthropic({ apiKey });
+    const workspaceId = process.env.ANTHROPIC_WORKSPACE_ID;
+    const client = new Anthropic({
+      apiKey,
+      ...(workspaceId && { defaultHeaders: { "anthropic-workspace-id": workspaceId } }),
+    });
     const response = await client.messages.create({
       model: "claude-opus-5-5",
       max_tokens: 16000,
