@@ -19,12 +19,12 @@ function NAButton({ active, onClick }: { active: boolean; onClick: () => void })
       onClick={onClick}
       style={{
         padding: "6px 10px",
-        border: "1.5px solid #E5E7EB",
+        border: "1.5px solid var(--border-default)",
         borderRadius: 8,
-        background: "#fff",
+        background: "var(--bg-card)",
         fontSize: 11,
         fontWeight: 700,
-        color: active ? "#374151" : "#9CA3AF",
+        color: active ? "var(--text-secondary)" : "var(--text-dim)",
         letterSpacing: 0.5,
         marginRight: 6,
         transition: "all 0.12s",
@@ -56,11 +56,11 @@ function NumericInput({ scale, value, onChange }: { scale: Scale; value: number 
               width: 36,
               height: 36,
               borderRadius: 8,
-              border: `1.5px solid ${sel ? bg : "#E5E7EB"}`,
-              background: sel ? bg : "#fff",
-              color: sel ? "#fff" : "#6B7280",
+              border: `1.5px solid ${sel ? bg : "var(--border-default)"}`,
+              background: sel ? bg : "var(--bg-card)",
+              color: sel ? "#fff" : "var(--text-muted)",
               fontSize: 13,
-              fontFamily: "'JetBrains Mono', monospace",
+              fontFamily: "var(--font-mono)",
               fontWeight: 600,
               transition: "all 0.12s",
               flexShrink: 0,
@@ -97,7 +97,7 @@ function StarsInput({ value, onChange }: { value: number | "na" | undefined; onC
                 cursor: "pointer",
                 fontSize: 28,
                 lineHeight: 1,
-                color: filled ? "#5B7BB4" : "#D1D5DB",
+                color: filled ? "var(--brand-accent)" : "var(--text-faint)",
                 transition: "color 0.1s, transform 0.1s",
                 transform: filled ? "scale(1.1)" : "scale(1)",
                 padding: 0,
@@ -111,10 +111,10 @@ function StarsInput({ value, onChange }: { value: number | "na" | undefined; onC
       {typeof value === "number" && (
         <span
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: 13,
             fontWeight: 600,
-            color: "#5B7BB4",
+            color: "var(--brand-accent)",
             marginLeft: 8,
           }}
         >
@@ -135,8 +135,8 @@ function ThumbsInput({ value, onChange }: { value: number | "na" | undefined; on
           width: 48,
           height: 44,
           borderRadius: 10,
-          border: `2px solid ${value === 0 ? "#DC2626" : "#E5E7EB"}`,
-          background: value === 0 ? "#FEF2F2" : "#fff",
+          border: `2px solid ${value === 0 ? "var(--error-text)" : "var(--border-default)"}`,
+          background: value === 0 ? "var(--bg-error)" : "var(--bg-card)",
           fontSize: 22,
           cursor: "pointer",
           transition: "all 0.12s",
@@ -154,8 +154,8 @@ function ThumbsInput({ value, onChange }: { value: number | "na" | undefined; on
           width: 48,
           height: 44,
           borderRadius: 10,
-          border: `2px solid ${value === 1 ? "#16A34A" : "#E5E7EB"}`,
-          background: value === 1 ? "#F0FDF4" : "#fff",
+          border: `2px solid ${value === 1 ? "var(--success-text)" : "var(--border-default)"}`,
+          background: value === 1 ? "#F0FDF4" : "var(--bg-card)",
           fontSize: 22,
           cursor: "pointer",
           transition: "all 0.12s",
@@ -172,7 +172,7 @@ function ThumbsInput({ value, onChange }: { value: number | "na" | undefined; on
           style={{
             fontSize: 12,
             fontWeight: 600,
-            color: value === 1 ? "#16A34A" : "#DC2626",
+            color: value === 1 ? "var(--success-text)" : "var(--error-text)",
             marginLeft: 6,
           }}
         >
@@ -193,7 +193,7 @@ function SliderInput({ value, onChange }: { value: number | "na" | undefined; on
     <>
       <NAButton active={value === "na"} onClick={() => onChange("na")} />
       <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
-        <span style={{ fontSize: 11, fontWeight: 700, color: "#1D4ED8", flexShrink: 0 }}>
+        <span style={{ fontSize: 11, fontWeight: 700, color: "var(--build-color)", flexShrink: 0 }}>
           Build
         </span>
         <div style={{ position: "relative", flex: 1, minWidth: 100 }}>
@@ -205,7 +205,7 @@ function SliderInput({ value, onChange }: { value: number | "na" | undefined; on
               right: 0,
               height: 6,
               borderRadius: 3,
-              background: "#E5E7EB",
+              background: "var(--border-default)",
               transform: "translateY(-50%)",
               pointerEvents: "none",
             }}
@@ -242,12 +242,12 @@ function SliderInput({ value, onChange }: { value: number | "na" | undefined; on
             }}
           />
         </div>
-        <span style={{ fontSize: 11, fontWeight: 700, color: "#15803D", flexShrink: 0 }}>
+        <span style={{ fontSize: 11, fontWeight: 700, color: "var(--buy-color)", flexShrink: 0 }}>
           Buy
         </span>
         <span
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: 15,
             fontWeight: 700,
             color: trackColor,
@@ -266,15 +266,15 @@ function SliderInput({ value, onChange }: { value: number | "na" | undefined; on
 export default function ScoreRow({ dim, index, scale, value, onChange }: ScoreRowProps) {
   const type = scale.type || "numeric";
   return (
-    <div className="rubric-row" style={{ padding: "14px 8px", borderBottom: "1px solid #F3F4F6" }}>
+    <div className="rubric-row" style={{ padding: "14px 8px", borderBottom: "1px solid var(--border-light)" }}>
       <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
         <span
           style={{
             width: 24,
             height: 24,
             borderRadius: "50%",
-            background: "#1A2744",
-            color: "#fff",
+            background: "var(--brand-navy)",
+            color: "var(--bg-card)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -287,10 +287,10 @@ export default function ScoreRow({ dim, index, scale, value, onChange }: ScoreRo
           {index}
         </span>
         <div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1A2744", marginBottom: 3 }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", marginBottom: 3 }}>
             {dim.name}
           </div>
-          <div style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 1.5 }}>{dim.desc}</div>
+          <div style={{ fontSize: 12, color: "var(--text-dim)", lineHeight: 1.5 }}>{dim.desc}</div>
         </div>
       </div>
       <div

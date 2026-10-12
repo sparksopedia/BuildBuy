@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import QRCode from "react-qr-code";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Card } from "@/components/Primitives";
 import Footer from "@/components/Footer";
 import { subscribeToResponses, getResponses } from "@/lib/data";
 import { exportCSV, exportPDF } from "@/lib/export";
 import { pct, getVerdict } from "@/lib/utils";
 import type { Rubric, EvalResponse } from "@/lib/constants";
+
+const QRCode = lazy(() => import("react-qr-code"));
 
 interface ResultsViewProps {
   rubric: Rubric;
@@ -26,7 +27,6 @@ export default function ResultsView({
   const [lastSync, setLastSync] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Subscribe to real-time updates
   useEffect(() => {
     const unsubscribe = subscribeToResponses(rubric.id, (fresh) => {
       setResponses(fresh);
@@ -67,8 +67,8 @@ export default function ResultsView({
     <div
       style={{
         minHeight: "100vh",
-        background: "#F4F6FA",
-        fontFamily: "'DM Sans', sans-serif",
+        background: "var(--bg-page)",
+        fontFamily: "var(--font-body)",
         padding: "28px 20px",
       }}
     >
@@ -77,27 +77,27 @@ export default function ResultsView({
           <button
             className="nav-back"
             onClick={() => onNavigate("home")}
-            style={{ fontSize: 13, color: "#9CA3AF", background: "none", border: "none" }}
+            style={{ fontSize: 13, color: "var(--text-dim)", background: "none", border: "none" }}
           >
             ← Home
           </button>
           <div style={{ flex: 1 }}>
             <div
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 17,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
               }}
             >
               {rubric.org && (
-                <span style={{ fontWeight: 400, color: "#9CA3AF" }}>{rubric.org} · </span>
+                <span style={{ fontWeight: 400, color: "var(--text-dim)" }}>{rubric.org} · </span>
               )}
               {rubric.title}
             </div>
-            <div style={{ fontSize: 12, color: "#9CA3AF" }}>
+            <div style={{ fontSize: 12, color: "var(--text-dim)" }}>
               by {rubric.authorName} ·{" "}
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", letterSpacing: 1 }}>
+              <span style={{ fontFamily: "var(--font-mono)", letterSpacing: 1 }}>
                 {rubric.id}
               </span>
               {rubric.description && (
@@ -121,8 +121,8 @@ export default function ResultsView({
             <span
               style={{
                 fontSize: 12,
-                color: "#9CA3AF",
-                fontFamily: "'JetBrains Mono', monospace",
+                color: "var(--text-dim)",
+                fontFamily: "var(--font-mono)",
               }}
             >
               {n} evaluator{n !== 1 ? "s" : ""}
@@ -130,7 +130,7 @@ export default function ResultsView({
             <span
               style={{
                 fontSize: 10,
-                color: "#22C55E",
+                color: "var(--live-dot)",
                 fontWeight: 600,
                 display: "flex",
                 alignItems: "center",
@@ -142,7 +142,7 @@ export default function ResultsView({
                   width: 6,
                   height: 6,
                   borderRadius: "50%",
-                  background: "#22C55E",
+                  background: "var(--live-dot)",
                   display: "inline-block",
                 }}
               />
@@ -154,7 +154,7 @@ export default function ResultsView({
         </div>
 
         {/* Tabs */}
-        <div style={{ display: "flex", borderBottom: "2px solid #E5E7EB", marginBottom: 20 }}>
+        <div style={{ display: "flex", borderBottom: "2px solid var(--border-default)", marginBottom: 20 }}>
           {(
             [
               ["summary", "Summary"],
@@ -181,7 +181,7 @@ export default function ResultsView({
             <div style={{ fontSize: 32, marginBottom: 12 }}>○</div>
             <h3
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 20,
                 fontWeight: 600,
                 marginBottom: 8,
@@ -189,24 +189,26 @@ export default function ResultsView({
             >
               No Evaluations Yet
             </h3>
-            <p style={{ color: "#6B7280", fontSize: 14, marginBottom: 8 }}>
+            <p style={{ color: "var(--text-muted)", fontSize: 14, marginBottom: 8 }}>
               Share code{" "}
               <strong
-                style={{ fontFamily: "'JetBrains Mono', monospace", letterSpacing: 2 }}
+                style={{ fontFamily: "var(--font-mono)", letterSpacing: 2 }}
               >
                 {rubric.id}
               </strong>{" "}
               with your stakeholders to collect scores.
             </p>
-            <div style={{ margin: "16px 0", display: "inline-block", background: "#fff", borderRadius: 12, padding: 14 }}>
-              <QRCode
-                value={`https://buildorbuy.app?code=${rubric.id}`}
-                size={120}
-                bgColor="#FFFFFF"
-                fgColor="#1A2744"
-              />
+            <div style={{ margin: "16px 0", display: "inline-block", background: "var(--bg-card)", borderRadius: 12, padding: 14 }}>
+              <Suspense fallback={<div style={{ width: 120, height: 120 }} />}>
+                <QRCode
+                  value={`https://buildorbuy.app?code=${rubric.id}`}
+                  size={120}
+                  bgColor="#FFFFFF"
+                  fgColor="#1A2744"
+                />
+              </Suspense>
             </div>
-            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 20 }}>
+            <p style={{ fontSize: 12, color: "var(--text-dim)", marginBottom: 20 }}>
               Scan to score, or invite Product, Engineering, Operations, and Business team members
               for a well-rounded view.
             </p>
@@ -238,7 +240,7 @@ export default function ResultsView({
                   </span>
                   <div
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                       fontSize: 46,
                       fontWeight: 700,
                       color: v.col,
@@ -247,12 +249,12 @@ export default function ResultsView({
                     }}
                   >
                     {overallAvg !== null ? overallAvg.toFixed(2) : "—"}
-                    <span style={{ fontSize: 18, color: "#9CA3AF", fontWeight: 400 }}>
+                    <span style={{ fontSize: 18, color: "var(--text-dim)", fontWeight: 400 }}>
                       {" "}
                       / {rubric.scale.max}
                     </span>
                   </div>
-                  <p style={{ fontSize: 13, color: "#9CA3AF", marginBottom: 24 }}>
+                  <p style={{ fontSize: 13, color: "var(--text-dim)", marginBottom: 24 }}>
                     aggregate score · N/A excluded · {n} evaluator{n !== 1 ? "s" : ""}
                     {Object.keys(roleMap).length > 0 && (
                       <span style={{ marginLeft: 4 }}>
@@ -274,7 +276,7 @@ export default function ResultsView({
                     }}
                   >
                     <span
-                      style={{ fontSize: 12, fontWeight: 700, color: "#1D4ED8", width: 55, textAlign: "right" }}
+                      style={{ fontSize: 12, fontWeight: 700, color: "var(--build-color)", width: 55, textAlign: "right" }}
                     >
                       Build
                     </span>
@@ -282,7 +284,7 @@ export default function ResultsView({
                       style={{
                         flex: 1,
                         height: 12,
-                        background: "#E5E7EB",
+                        background: "var(--border-default)",
                         borderRadius: 100,
                         position: "relative",
                         overflow: "visible",
@@ -304,17 +306,17 @@ export default function ResultsView({
                           width: 24,
                           height: 24,
                           borderRadius: "50%",
-                          background: "#1A2744",
-                          border: "3px solid #fff",
+                          background: "var(--brand-navy)",
+                          border: "3px solid var(--bg-card)",
                           boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                         }}
                       />
                     </div>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: "#15803D", width: 55 }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "var(--buy-color)", width: 55 }}>
                       Buy
                     </span>
                   </div>
-                  <p style={{ fontSize: 12, color: "#9CA3AF", fontStyle: "italic" }}>
+                  <p style={{ fontSize: 12, color: "var(--text-dim)", fontStyle: "italic" }}>
                     {overallRatio < 0.3
                       ? "The aggregate indicates a strong case for building this capability internally."
                       : overallRatio < 0.5
@@ -328,10 +330,10 @@ export default function ResultsView({
                 <Card>
                   <h3
                     style={{
-                      fontFamily: "'Fraunces', serif",
+                      fontFamily: "var(--font-heading)",
                       fontSize: 18,
                       fontWeight: 600,
-                      color: "#1A2744",
+                      color: "var(--text-primary)",
                       marginBottom: 18,
                     }}
                   >
@@ -339,20 +341,22 @@ export default function ResultsView({
                   </h3>
                   <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
                     <div style={{ flexShrink: 0 }}>
-                      <QRCode
-                        value={`https://buildorbuy.app?code=${rubric.id}`}
-                        size={120}
-                        bgColor="#FFFFFF"
-                        fgColor="#1A2744"
-                      />
+                      <Suspense fallback={<div style={{ width: 120, height: 120 }} />}>
+                        <QRCode
+                          value={`https://buildorbuy.app?code=${rubric.id}`}
+                          size={120}
+                          bgColor="#FFFFFF"
+                          fgColor="#1A2744"
+                        />
+                      </Suspense>
                     </div>
-                    <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.65, margin: 0 }}>
+                    <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
                       Scan the QR code or share code{" "}
                       <strong
                         style={{
-                          fontFamily: "'JetBrains Mono', monospace",
+                          fontFamily: "var(--font-mono)",
                           letterSpacing: 2,
-                          color: "#1A2744",
+                          color: "var(--text-primary)",
                           fontSize: 16,
                         }}
                       >
@@ -366,10 +370,10 @@ export default function ResultsView({
                 <Card>
                   <h3
                     style={{
-                      fontFamily: "'Fraunces', serif",
+                      fontFamily: "var(--font-heading)",
                       fontSize: 18,
                       fontWeight: 600,
-                      color: "#1A2744",
+                      color: "var(--text-primary)",
                       marginBottom: 18,
                     }}
                   >
@@ -383,7 +387,7 @@ export default function ResultsView({
                         alignItems: "center",
                         gap: 10,
                         padding: "9px 0",
-                        borderBottom: "1px solid #F3F4F6",
+                        borderBottom: "1px solid var(--border-light)",
                       }}
                     >
                       <span
@@ -391,7 +395,7 @@ export default function ResultsView({
                           width: 170,
                           fontSize: 13,
                           fontWeight: 500,
-                          color: "#374151",
+                          color: "var(--text-secondary)",
                           flexShrink: 0,
                         }}
                       >
@@ -401,7 +405,7 @@ export default function ResultsView({
                         style={{
                           flex: 1,
                           height: 8,
-                          background: "#F3F4F6",
+                          background: "var(--border-light)",
                           borderRadius: 100,
                           overflow: "hidden",
                         }}
@@ -421,7 +425,7 @@ export default function ResultsView({
                               width: "100%",
                               height: "100%",
                               background:
-                                "repeating-linear-gradient(90deg, #E5E7EB 0, #E5E7EB 4px, transparent 4px, transparent 8px)",
+                                "repeating-linear-gradient(90deg, var(--border-default) 0, var(--border-default) 4px, transparent 4px, transparent 8px)",
                             }}
                           />
                         )}
@@ -429,7 +433,7 @@ export default function ResultsView({
                       {d.avg !== null && d.ratio !== null ? (
                         <span
                           style={{
-                            fontFamily: "'JetBrains Mono', monospace",
+                            fontFamily: "var(--font-mono)",
                             fontSize: 13,
                             fontWeight: 600,
                             color: getVerdict(d.ratio).col,
@@ -444,7 +448,7 @@ export default function ResultsView({
                           style={{
                             fontSize: 11,
                             fontWeight: 700,
-                            color: "#D1D5DB",
+                            color: "var(--text-faint)",
                             width: 36,
                             textAlign: "right",
                           }}
@@ -456,7 +460,7 @@ export default function ResultsView({
                         <span
                           style={{
                             fontSize: 10,
-                            color: "#D1D5DB",
+                            color: "var(--text-faint)",
                             whiteSpace: "nowrap",
                             flexShrink: 0,
                           }}
@@ -475,10 +479,10 @@ export default function ResultsView({
               <Card>
                 <h3
                   style={{
-                    fontFamily: "'Fraunces', serif",
+                    fontFamily: "var(--font-heading)",
                     fontSize: 18,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 18,
                   }}
                 >
@@ -492,13 +496,13 @@ export default function ResultsView({
                           style={{
                             textAlign: "left",
                             padding: "8px 10px",
-                            background: "#F9FAFB",
-                            borderBottom: "2px solid #E5E7EB",
+                            background: "var(--table-header-bg)",
+                            borderBottom: "2px solid var(--border-default)",
                             fontSize: 11,
                             fontWeight: 700,
                             textTransform: "uppercase",
                             letterSpacing: 0.5,
-                            color: "#6B7280",
+                            color: "var(--text-muted)",
                             whiteSpace: "nowrap",
                           }}
                         >
@@ -508,13 +512,13 @@ export default function ResultsView({
                           style={{
                             textAlign: "left",
                             padding: "8px 6px",
-                            background: "#F9FAFB",
-                            borderBottom: "2px solid #E5E7EB",
+                            background: "var(--table-header-bg)",
+                            borderBottom: "2px solid var(--border-default)",
                             fontSize: 11,
                             fontWeight: 700,
                             textTransform: "uppercase",
                             letterSpacing: 0.5,
-                            color: "#6B7280",
+                            color: "var(--text-muted)",
                             whiteSpace: "nowrap",
                           }}
                         >
@@ -526,13 +530,13 @@ export default function ResultsView({
                             style={{
                               textAlign: "center",
                               padding: "8px 6px",
-                              background: "#F9FAFB",
-                              borderBottom: "2px solid #E5E7EB",
+                              background: "var(--table-header-bg)",
+                              borderBottom: "2px solid var(--border-default)",
                               fontSize: 10,
                               fontWeight: 700,
                               textTransform: "uppercase",
                               letterSpacing: 0.3,
-                              color: "#6B7280",
+                              color: "var(--text-muted)",
                               whiteSpace: "nowrap",
                             }}
                           >
@@ -543,13 +547,13 @@ export default function ResultsView({
                           style={{
                             textAlign: "center",
                             padding: "8px 10px",
-                            background: "#F9FAFB",
-                            borderBottom: "2px solid #E5E7EB",
+                            background: "var(--table-header-bg)",
+                            borderBottom: "2px solid var(--border-default)",
                             fontSize: 11,
                             fontWeight: 700,
                             textTransform: "uppercase",
                             letterSpacing: 0.5,
-                            color: "#6B7280",
+                            color: "var(--text-muted)",
                           }}
                         >
                           Avg
@@ -569,12 +573,12 @@ export default function ResultsView({
                         return (
                           <tr
                             key={i}
-                            style={{ background: i % 2 === 0 ? "#fff" : "#FAFAFA" }}
+                            style={{ background: i % 2 === 0 ? "var(--bg-card)" : "var(--table-stripe)" }}
                           >
                             <td
                               style={{
                                 padding: "9px 10px",
-                                borderBottom: "1px solid #F3F4F6",
+                                borderBottom: "1px solid var(--border-light)",
                                 fontWeight: 500,
                               }}
                             >
@@ -583,9 +587,9 @@ export default function ResultsView({
                             <td
                               style={{
                                 padding: "9px 6px",
-                                borderBottom: "1px solid #F3F4F6",
+                                borderBottom: "1px solid var(--border-light)",
                                 fontSize: 11,
-                                color: "#9CA3AF",
+                                color: "var(--text-dim)",
                                 whiteSpace: "nowrap",
                               }}
                             >
@@ -598,10 +602,10 @@ export default function ResultsView({
                                   key={d.id}
                                   style={{
                                     padding: "9px 6px",
-                                    borderBottom: "1px solid #F3F4F6",
+                                    borderBottom: "1px solid var(--border-light)",
                                     textAlign: "center",
-                                    fontFamily: "'JetBrains Mono', monospace",
-                                    color: s === "na" ? "#D1D5DB" : "#374151",
+                                    fontFamily: "var(--font-mono)",
+                                    color: s === "na" ? "var(--text-faint)" : "var(--text-secondary)",
                                     fontSize: s === "na" ? 10 : 13,
                                   }}
                                 >
@@ -612,11 +616,11 @@ export default function ResultsView({
                             <td
                               style={{
                                 padding: "9px 10px",
-                                borderBottom: "1px solid #F3F4F6",
+                                borderBottom: "1px solid var(--border-light)",
                                 textAlign: "center",
-                                fontFamily: "'JetBrains Mono', monospace",
+                                fontFamily: "var(--font-mono)",
                                 fontWeight: 700,
-                                color: rv ? rv.col : "#9CA3AF",
+                                color: rv ? rv.col : "var(--text-dim)",
                               }}
                             >
                               {avg !== null ? avg.toFixed(1) : "—"}
@@ -635,21 +639,21 @@ export default function ResultsView({
               <Card>
                 <h3
                   style={{
-                    fontFamily: "'Fraunces', serif",
+                    fontFamily: "var(--font-heading)",
                     fontSize: 18,
                     fontWeight: 600,
-                    color: "#1A2744",
+                    color: "var(--text-primary)",
                     marginBottom: 6,
                   }}
                 >
                   Evaluator Comments
                 </h3>
-                <p style={{ fontSize: 13, color: "#9CA3AF", marginBottom: 20 }}>
+                <p style={{ fontSize: 13, color: "var(--text-dim)", marginBottom: 20 }}>
                   {withComments.length} of {n} evaluator{n !== 1 ? "s" : ""} left a comment
                 </p>
                 {withComments.length === 0 ? (
                   <div
-                    style={{ textAlign: "center", padding: "40px 20px", color: "#9CA3AF" }}
+                    style={{ textAlign: "center", padding: "40px 20px", color: "var(--text-dim)" }}
                   >
                     <div style={{ fontSize: 28, marginBottom: 12 }}>○</div>
                     <p style={{ fontSize: 14 }}>No comments have been submitted yet.</p>
@@ -669,10 +673,10 @@ export default function ResultsView({
                         <div
                           key={i}
                           style={{
-                            background: "#F9FAFB",
+                            background: "var(--bg-card-alt)",
                             borderRadius: 12,
                             padding: "16px 18px",
-                            borderLeft: "3px solid #5B7BB4",
+                            borderLeft: "3px solid var(--brand-accent)",
                           }}
                         >
                           <div
@@ -685,7 +689,7 @@ export default function ResultsView({
                           >
                             <div>
                               <span
-                                style={{ fontSize: 14, fontWeight: 600, color: "#1A2744" }}
+                                style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)" }}
                               >
                                 {r.evaluatorName}
                               </span>
@@ -693,7 +697,7 @@ export default function ResultsView({
                                 <span
                                   style={{
                                     fontSize: 12,
-                                    color: "#9CA3AF",
+                                    color: "var(--text-dim)",
                                     marginLeft: 8,
                                   }}
                                 >
@@ -721,7 +725,7 @@ export default function ResultsView({
                           <p
                             style={{
                               fontSize: 14,
-                              color: "#374151",
+                              color: "var(--text-secondary)",
                               lineHeight: 1.7,
                               whiteSpace: "pre-wrap",
                             }}

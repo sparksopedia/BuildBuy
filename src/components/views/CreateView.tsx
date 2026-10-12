@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import QRCode from "react-qr-code";
+import { useState, lazy, Suspense } from "react";
 import { Card, FieldLabel, TextInput, Divider } from "@/components/Primitives";
 import { DIMS, SCALES, type Dimension, type Scale, type Rubric } from "@/lib/constants";
 import { genCode } from "@/lib/utils";
@@ -11,6 +10,8 @@ import {
   saveCustomDimension,
   deleteCustomDimension,
 } from "@/lib/data";
+
+const QRCode = lazy(() => import("react-qr-code"));
 
 interface CreateViewProps {
   onNavigate: (view: string) => void;
@@ -66,7 +67,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
       setStep(4);
     } catch (err) {
       setCreateError(
-        err instanceof Error ? err.message : "Failed to save rubric. Check your Supabase configuration."
+        err instanceof Error ? err.message : "Failed to save rubric. Please try again."
       );
     } finally {
       setLoading(false);
@@ -77,8 +78,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
     <div
       style={{
         minHeight: "100vh",
-        background: "#F4F6FA",
-        fontFamily: "'DM Sans', sans-serif",
+        background: "var(--bg-page)",
+        fontFamily: "var(--font-body)",
         padding: "28px 20px",
       }}
     >
@@ -87,16 +88,16 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
           <button
             className="nav-back"
             onClick={() => onNavigate("home")}
-            style={{ fontSize: 13, color: "#9CA3AF", background: "none", border: "none" }}
+            style={{ fontSize: 13, color: "var(--text-dim)", background: "none", border: "none" }}
           >
             ← Home
           </button>
           <span
             style={{
-              fontFamily: "'Fraunces', serif",
+              fontFamily: "var(--font-heading)",
               fontSize: 18,
               fontWeight: 600,
-              color: "#1A2744",
+              color: "var(--text-primary)",
               flex: 1,
             }}
           >
@@ -115,8 +116,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   justifyContent: "center",
                   fontSize: 11,
                   fontWeight: 700,
-                  background: step > n ? "#5B7BB4" : step === n ? "#1A2744" : "#E5E7EB",
-                  color: step >= n ? "#fff" : "#9CA3AF",
+                  background: step > n ? "var(--brand-accent)" : step === n ? "var(--brand-navy)" : "var(--border-default)",
+                  color: step >= n ? "#fff" : "var(--text-dim)",
                   transition: "all 0.2s",
                 }}
               >
@@ -131,10 +132,10 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
           <Card>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 6,
               }}
             >
@@ -143,7 +144,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             <p
               style={{
                 fontSize: 14,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 22,
                 lineHeight: 1.65,
               }}
@@ -159,7 +160,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   fontWeight: 400,
                   textTransform: "none",
                   letterSpacing: 0,
-                  color: "#9CA3AF",
+                  color: "var(--text-dim)",
                   fontSize: 11,
                 }}
               >
@@ -186,7 +187,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   fontWeight: 400,
                   textTransform: "none",
                   letterSpacing: 0,
-                  color: "#9CA3AF",
+                  color: "var(--text-dim)",
                   fontSize: 11,
                 }}
               >
@@ -202,10 +203,11 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                 display: "block",
                 width: "100%",
                 padding: "10px 14px",
-                border: "1.5px solid #E5E7EB",
+                border: "1.5px solid var(--border-default)",
                 borderRadius: 9,
                 fontSize: 14,
-                color: "#1A2744",
+                color: "var(--text-primary)",
+                background: "var(--bg-input)",
                 lineHeight: 1.6,
                 resize: "vertical",
                 marginBottom: 20,
@@ -224,14 +226,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             <p
               style={{
                 fontSize: 13,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 14,
                 lineHeight: 1.6,
               }}
             >
               Each dimension will be scored on this scale.
-              <strong style={{ color: "#1D4ED8" }}> Lower scores favor building internally</strong>;
-              <strong style={{ color: "#15803D" }}>
+              <strong style={{ color: "var(--build-color)" }}> Lower scores favor building internally</strong>;
+              <strong style={{ color: "var(--buy-color)" }}>
                 {" "}
                 higher scores favor the commercial solution
               </strong>
@@ -245,9 +247,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   onClick={() => setScale(s)}
                   style={{
                     padding: "9px 14px",
-                    border: "1.5px solid #E5E7EB",
+                    border: "1.5px solid var(--border-default)",
                     borderRadius: 9,
-                    background: "#fff",
+                    background: "var(--bg-card)",
                     display: "flex",
                     flexDirection: "column",
                     gap: 2,
@@ -256,7 +258,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                 >
                   <span
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                       fontSize: 15,
                       fontWeight: 600,
                     }}
@@ -269,11 +271,11 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             </div>
             <div
               style={{
-                background: "#F9FAFB",
+                background: "var(--bg-card-alt)",
                 borderRadius: 9,
                 padding: "10px 14px",
                 fontSize: 13,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 24,
                 display: "flex",
                 gap: 10,
@@ -281,21 +283,21 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               }}
             >
               <span>
-                <strong style={{ color: "#9CA3AF" }}>N/A</strong> = Cannot assess
+                <strong style={{ color: "var(--text-dim)" }}>N/A</strong> = Cannot assess
               </span>
-              <span style={{ color: "#E5E7EB" }}>·</span>
+              <span style={{ color: "var(--border-default)" }}>·</span>
               <span>
                 <strong
-                  style={{ fontFamily: "'JetBrains Mono', monospace", color: "#1D4ED8" }}
+                  style={{ fontFamily: "var(--font-mono)", color: "var(--build-color)" }}
                 >
                   {scale.buildLabel}
                 </strong>{" "}
                 = Build internally
               </span>
-              <span style={{ color: "#E5E7EB" }}>·</span>
+              <span style={{ color: "var(--border-default)" }}>·</span>
               <span>
                 <strong
-                  style={{ fontFamily: "'JetBrains Mono', monospace", color: "#15803D" }}
+                  style={{ fontFamily: "var(--font-mono)", color: "var(--buy-color)" }}
                 >
                   {scale.buyLabel}
                 </strong>{" "}
@@ -322,10 +324,10 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
           <Card>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 6,
               }}
             >
@@ -334,26 +336,26 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             <p
               style={{
                 fontSize: 14,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 6,
                 lineHeight: 1.65,
               }}
             >
               Choose from the library below, or add your own custom dimensions at the bottom.
             </p>
-            <p style={{ fontSize: 13, color: "#9CA3AF", marginBottom: 20 }}>
+            <p style={{ fontSize: 13, color: "var(--text-dim)", marginBottom: 20 }}>
               <span
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "var(--font-mono)",
                   fontWeight: 600,
-                  color: "#1A2744",
+                  color: "var(--text-primary)",
                 }}
               >
                 {selDims.length}/12
               </span>{" "}
               selected
               {customDims.length > 0 && (
-                <span style={{ marginLeft: 8, color: "#5B7BB4", fontWeight: 600 }}>
+                <span style={{ marginLeft: 8, color: "var(--brand-accent)", fontWeight: 600 }}>
                   · {customDims.filter((d) => selDims.includes(d.id)).length} custom
                 </span>
               )}
@@ -363,7 +365,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               style={{
                 fontSize: 11,
                 fontWeight: 700,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 textTransform: "uppercase",
                 letterSpacing: 0.8,
                 marginBottom: 10,
@@ -390,9 +392,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     disabled={atMax}
                     style={{
                       padding: 12,
-                      border: "1.5px solid #E5E7EB",
+                      border: "1.5px solid var(--border-default)",
                       borderRadius: 10,
-                      background: "#fff",
+                      background: "var(--bg-card)",
                       textAlign: "left",
                       display: "flex",
                       flexDirection: "column",
@@ -404,18 +406,18 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     <span
                       style={{
                         fontSize: 12,
-                        color: sel ? "#1A2744" : "#D1D5DB",
+                        color: sel ? "var(--text-primary)" : "var(--text-faint)",
                         fontWeight: 700,
                       }}
                     >
                       {sel ? "✓" : "○"}
                     </span>
                     <span
-                      style={{ fontSize: 13, fontWeight: 600, color: "#1A2744", lineHeight: 1.3 }}
+                      style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.3 }}
                     >
                       {d.name}
                     </span>
-                    <span style={{ fontSize: 11, color: "#9CA3AF", lineHeight: 1.4 }}>
+                    <span style={{ fontSize: 11, color: "var(--text-dim)", lineHeight: 1.4 }}>
                       {d.desc}
                     </span>
                   </button>
@@ -424,12 +426,12 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             </div>
 
             {/* Custom dimensions */}
-            <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: 20, marginBottom: 20 }}>
+            <div style={{ borderTop: "1px solid var(--border-light)", paddingTop: 20, marginBottom: 20 }}>
               <div
                 style={{
                   fontSize: 11,
                   fontWeight: 700,
-                  color: "#6B7280",
+                  color: "var(--text-muted)",
                   textTransform: "uppercase",
                   letterSpacing: 0.8,
                   marginBottom: 12,
@@ -460,9 +462,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             width: "100%",
                             padding: 12,
                             paddingRight: 28,
-                            border: "1.5px solid #5B7BB4",
+                            border: "1.5px solid var(--brand-accent)",
                             borderRadius: 10,
-                            background: sel ? "#EDF2FA" : "#F5F8FC",
+                            background: sel ? "var(--bg-custom-dim-sel)" : "var(--bg-custom-dim)",
                             textAlign: "left",
                             display: "flex",
                             flexDirection: "column",
@@ -475,7 +477,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             <span
                               style={{
                                 fontSize: 12,
-                                color: sel ? "#5B7BB4" : "#D1D5DB",
+                                color: sel ? "var(--brand-accent)" : "var(--text-faint)",
                                 fontWeight: 700,
                               }}
                             >
@@ -485,8 +487,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                               style={{
                                 fontSize: 9,
                                 fontWeight: 700,
-                                background: "#D4DEF0",
-                                color: "#3D5A8C",
+                                background: "var(--badge-bg)",
+                                color: "var(--badge-text)",
                                 padding: "1px 5px",
                                 borderRadius: 3,
                                 letterSpacing: 0.3,
@@ -500,14 +502,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             style={{
                               fontSize: 13,
                               fontWeight: 600,
-                              color: "#1A2744",
+                              color: "var(--text-primary)",
                               lineHeight: 1.3,
                             }}
                           >
                             {d.name}
                           </span>
                           {d.desc && (
-                            <span style={{ fontSize: 11, color: "#9CA3AF", lineHeight: 1.4 }}>
+                            <span style={{ fontSize: 11, color: "var(--text-dim)", lineHeight: 1.4 }}>
                               {d.desc}
                             </span>
                           )}
@@ -524,14 +526,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                             width: 20,
                             height: 20,
                             borderRadius: "50%",
-                            background: "#FEE2E2",
+                            background: "var(--bg-error)",
                             border: "none",
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                             fontSize: 11,
-                            color: "#DC2626",
+                            color: "var(--error-text)",
                             lineHeight: 1,
                             fontWeight: 700,
                           }}
@@ -553,7 +555,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     style={{
                       fontSize: 11,
                       fontWeight: 700,
-                      color: "#5B7BB4",
+                      color: "var(--brand-accent)",
                       textTransform: "uppercase",
                       letterSpacing: 0.8,
                       marginBottom: 10,
@@ -588,9 +590,9 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                 width: "100%",
                                 padding: 12,
                                 paddingRight: 28,
-                                border: "1.5px dashed #5B7BB4",
+                                border: "1.5px dashed var(--brand-accent)",
                                 borderRadius: 10,
-                                background: "#F5F8FC",
+                                background: "var(--bg-custom-dim)",
                                 textAlign: "left",
                                 display: "flex",
                                 flexDirection: "column",
@@ -604,8 +606,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                   style={{
                                     fontSize: 9,
                                     fontWeight: 700,
-                                    background: "#D4DEF0",
-                                    color: "#3D5A8C",
+                                    background: "var(--badge-bg)",
+                                    color: "var(--badge-text)",
                                     padding: "1px 5px",
                                     borderRadius: 3,
                                     letterSpacing: 0.3,
@@ -619,14 +621,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                 style={{
                                   fontSize: 13,
                                   fontWeight: 600,
-                                  color: "#1A2744",
+                                  color: "var(--text-primary)",
                                   lineHeight: 1.3,
                                 }}
                               >
                                 {sd.name}
                               </span>
                               {sd.desc && (
-                                <span style={{ fontSize: 11, color: "#9CA3AF", lineHeight: 1.4 }}>
+                                <span style={{ fontSize: 11, color: "var(--text-dim)", lineHeight: 1.4 }}>
                                   {sd.desc}
                                 </span>
                               )}
@@ -643,14 +645,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                                 width: 20,
                                 height: 20,
                                 borderRadius: "50%",
-                                background: "#FEE2E2",
+                                background: "var(--bg-error)",
                                 border: "none",
                                 cursor: "pointer",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 fontSize: 11,
-                                color: "#DC2626",
+                                color: "var(--error-text)",
                                 fontWeight: 700,
                               }}
                               title="Remove from saved library"
@@ -668,13 +670,13 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
               {selDims.length < 12 ? (
                 <div
                   style={{
-                    background: "#F9FAFB",
-                    border: "1.5px dashed #E5E7EB",
+                    background: "var(--bg-card-alt)",
+                    border: "1.5px dashed var(--border-default)",
                     borderRadius: 10,
                     padding: 16,
                   }}
                 >
-                  <div style={{ fontSize: 12, fontWeight: 600, color: "#6B7280", marginBottom: 10 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)", marginBottom: 10 }}>
                     Add a custom dimension
                   </div>
                   <input
@@ -688,10 +690,11 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                       display: "block",
                       width: "100%",
                       padding: "9px 12px",
-                      border: "1.5px solid #E5E7EB",
+                      border: "1.5px solid var(--border-default)",
                       borderRadius: 8,
                       fontSize: 14,
-                      color: "#1A2744",
+                      color: "var(--text-primary)",
+                      background: "var(--bg-input)",
                       marginBottom: 8,
                     }}
                   />
@@ -706,10 +709,11 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                       display: "block",
                       width: "100%",
                       padding: "9px 12px",
-                      border: "1.5px solid #E5E7EB",
+                      border: "1.5px solid var(--border-default)",
                       borderRadius: 8,
                       fontSize: 13,
-                      color: "#1A2744",
+                      color: "var(--text-primary)",
+                      background: "var(--bg-input)",
                       marginBottom: 10,
                     }}
                   />
@@ -738,7 +742,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                   </button>
                 </div>
               ) : (
-                <p style={{ fontSize: 13, color: "#9CA3AF", fontStyle: "italic" }}>
+                <p style={{ fontSize: 13, color: "var(--text-dim)", fontStyle: "italic" }}>
                   Maximum of 12 dimensions reached. Remove one to add a custom dimension.
                 </p>
               )}
@@ -764,21 +768,21 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
           <Card>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 6,
               }}
             >
               Review & Create
             </h2>
-            <p style={{ fontSize: 14, color: "#6B7280", marginBottom: 20 }}>
+            <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 20 }}>
               Confirm before generating your share code.
             </p>
             <div
               style={{
-                background: "#F9FAFB",
+                background: "var(--bg-card-alt)",
                 borderRadius: 10,
                 padding: 16,
                 marginBottom: 16,
@@ -806,14 +810,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                         justifyContent: "space-between",
                         gap: 12,
                         padding: "7px 0",
-                        borderBottom: "1px solid #F3F4F6",
+                        borderBottom: "1px solid var(--border-light)",
                       }}
                     >
                       <span
                         style={{
                           fontSize: 11,
                           fontWeight: 700,
-                          color: "#9CA3AF",
+                          color: "var(--text-dim)",
                           textTransform: "uppercase",
                           letterSpacing: 0.5,
                           flexShrink: 0,
@@ -825,7 +829,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                         style={{
                           fontSize: 13,
                           fontWeight: 500,
-                          color: "#1A2744",
+                          color: "var(--text-primary)",
                           textAlign: "right",
                         }}
                       >
@@ -845,8 +849,8 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                         width: 22,
                         height: 22,
                         borderRadius: "50%",
-                        background: "#1A2744",
-                        color: "#fff",
+                        background: "var(--brand-navy)",
+                        color: "var(--bg-card)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -857,14 +861,14 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                     >
                       {i + 1}
                     </span>
-                    <span style={{ fontSize: 14, color: "#374151" }}>{d?.name}</span>
+                    <span style={{ fontSize: 14, color: "var(--text-secondary)" }}>{d?.name}</span>
                     {d?.custom && (
                       <span
                         style={{
                           fontSize: 9,
                           fontWeight: 700,
-                          background: "#D4DEF0",
-                          color: "#3D5A8C",
+                          background: "var(--badge-bg)",
+                          color: "var(--badge-text)",
                           padding: "2px 6px",
                           borderRadius: 3,
                           letterSpacing: 0.3,
@@ -881,12 +885,12 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             {createError && (
               <div
                 style={{
-                  background: "#FEF2F2",
-                  border: "1px solid #FECACA",
+                  background: "var(--bg-error)",
+                  border: "1px solid var(--bg-error-border)",
                   borderRadius: 9,
                   padding: "10px 14px",
                   fontSize: 13,
-                  color: "#DC2626",
+                  color: "var(--error-text)",
                   marginBottom: 16,
                 }}
               >
@@ -907,13 +911,13 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
         {/* Step 4 — created */}
         {step === 4 && createdId && rubric && (
           <Card style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 32, color: "#5B7BB4", marginBottom: 12 }}>✦</div>
+            <div style={{ fontSize: 32, color: "var(--brand-accent)", marginBottom: 12 }}>✦</div>
             <h2
               style={{
-                fontFamily: "'Fraunces', serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: 24,
                 fontWeight: 700,
-                color: "#1A2744",
+                color: "var(--text-primary)",
                 marginBottom: 8,
               }}
             >
@@ -922,7 +926,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             <p
               style={{
                 fontSize: 14,
-                color: "#6B7280",
+                color: "var(--text-muted)",
                 marginBottom: 28,
                 lineHeight: 1.65,
                 maxWidth: 420,
@@ -934,7 +938,7 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             </p>
             <div
               style={{
-                background: "#F4F6FA",
+                background: "var(--bg-page)",
                 borderRadius: 14,
                 padding: "22px 20px",
                 marginBottom: 10,
@@ -946,11 +950,11 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
             >
               <span
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: 38,
                   fontWeight: 700,
                   letterSpacing: 10,
-                  color: "#1A2744",
+                  color: "var(--text-primary)",
                 }}
               >
                 {createdId}
@@ -964,37 +968,39 @@ export default function CreateView({ onNavigate, onRubricCreated }: CreateViewPr
                 }}
                 style={{
                   padding: "7px 14px",
-                  border: "1.5px solid #E5E7EB",
+                  border: "1.5px solid var(--border-default)",
                   borderRadius: 7,
-                  background: "#fff",
+                  background: "var(--bg-card)",
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "#374151",
+                  color: "var(--text-secondary)",
                 }}
               >
                 {copied ? "✓ Copied" : "Copy"}
               </button>
             </div>
-            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 20 }}>
+            <p style={{ fontSize: 12, color: "var(--text-dim)", marginBottom: 20 }}>
               Retrieve this rubric anytime from Home → My Rubrics using your author name.
             </p>
             <div
               style={{
-                background: "#fff",
+                background: "var(--bg-card)",
                 borderRadius: 12,
                 padding: 16,
                 display: "inline-block",
                 marginBottom: 12,
               }}
             >
-              <QRCode
-                value={`https://buildorbuy.app?code=${createdId}`}
-                size={140}
-                bgColor="#FFFFFF"
-                fgColor="#1A2744"
-              />
+              <Suspense fallback={<div style={{ width: 140, height: 140 }} />}>
+                <QRCode
+                  value={`https://buildorbuy.app?code=${createdId}`}
+                  size={140}
+                  bgColor="#FFFFFF"
+                  fgColor="#1A2744"
+                />
+              </Suspense>
             </div>
-            <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 28 }}>
+            <p style={{ fontSize: 12, color: "var(--text-dim)", marginBottom: 28 }}>
               Scan to open the evaluation directly on any device.
             </p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>

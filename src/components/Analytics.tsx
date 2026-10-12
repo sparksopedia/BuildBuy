@@ -64,8 +64,8 @@ export default function Analytics() {
             left: 0,
             right: 0,
             zIndex: 9999,
-            background: "#1A2744",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
+            background: "var(--consent-bg)",
+            borderTop: "1px solid var(--consent-border)",
             padding: "16px 20px",
             display: "flex",
             alignItems: "center",
@@ -73,12 +73,12 @@ export default function Analytics() {
             gap: 16,
             flexWrap: "wrap",
             boxShadow: "0 -4px 24px rgba(0,0,0,0.25)",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
           }}
         >
           <p
             style={{
-              color: "rgba(255,255,255,0.85)",
+              color: "var(--consent-text)",
               fontSize: 14,
               lineHeight: 1.5,
               margin: 0,
@@ -87,7 +87,7 @@ export default function Analytics() {
           >
             We use cookies to understand how visitors use this site and improve
             the experience.{" "}
-            <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 13 }}>
+            <span style={{ color: "var(--consent-text-muted)", fontSize: 13 }}>
               No personal data is sold or shared with third parties.
             </span>
           </p>
@@ -95,7 +95,7 @@ export default function Analytics() {
             <button
               onClick={accept}
               style={{
-                background: "#5B7BB4",
+                background: "var(--brand-accent)",
                 color: "#fff",
                 border: "none",
                 borderRadius: 8,
@@ -104,14 +104,9 @@ export default function Analytics() {
                 fontWeight: 600,
                 cursor: "pointer",
                 transition: "background 0.15s",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
               }}
-              onMouseEnter={(e) =>
-                ((e.target as HTMLButtonElement).style.background = "#4A6A9E")
-              }
-              onMouseLeave={(e) =>
-                ((e.target as HTMLButtonElement).style.background = "#5B7BB4")
-              }
+              className="donate-btn"
             >
               Accept
             </button>
@@ -127,7 +122,7 @@ export default function Analytics() {
                 fontWeight: 600,
                 cursor: "pointer",
                 transition: "all 0.15s",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
               }}
               onMouseEnter={(e) => {
                 const b = e.target as HTMLButtonElement;
