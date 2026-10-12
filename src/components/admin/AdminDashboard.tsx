@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-type Tab = "overview" | "rubrics" | "responses" | "authors" | "bans" | "audit";
+type Tab = "overview" | "rubrics" | "responses" | "authors" | "bans" | "audit" | "ai";
 
 interface Stats {
   totalRubrics: number;
@@ -67,6 +67,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "authors", label: "Authors" },
   { key: "bans", label: "Bans" },
   { key: "audit", label: "Audit Log" },
+  { key: "ai", label: "AI Analysis" },
 ];
 
 async function api<T>(path: string, opts?: RequestInit): Promise<T> {
@@ -153,6 +154,7 @@ export default function AdminDashboard() {
         {tab === "authors" && <AuthorsPanel />}
         {tab === "bans" && <BansPanel />}
         {tab === "audit" && <AuditPanel />}
+        {tab === "ai" && <AIAnalysisPanel />}
       </main>
     </div>
   );
@@ -682,6 +684,122 @@ function AuditPanel() {
       )}
     </div>
   );
+}
+
+function AIAnalysisPanel() {
+  const [analysis, setAnalysis] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [usage, setUsage] = useState<{ input_tokens: number; output_tokens: number } | null>(null);
+  const [analysisType, setAnalysisType] = useState<"usage" | "content-review">("usage");
+
+  const runAnalysis = async () => {
+    setLoading(true);
+    setError("");
+    setAnalysis("");
+    setUsage(null);
+    try {
+      const data = await api<{ analysis: string; usage: { input_tokens: number; output_tokens: number } }>(
+        "/api/admin/analyze",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: analysisType }),
+        }
+      );
+      setAnalysis(data.analysis);
+      setUsage(data.usage);
+    } catch (err) {
+      if (err instanceof Error && err.message === "UNAUTHORIZED") {
+        setError("Session expired");
+      } else {
+        setError("Analysis failed. Make sure ANTHROPIC_API_KEY is configured.");
+      }
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={styles.card}>
+      <h3 style={styles.cardTitle}>AI-Powered Analysis</h3>
+      <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "0 0 16px" }}>
+        Uses Claude to analyze platform data and surface insights. Each analysis uses the Claude API and consumes tokens.
+      </p>
+
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-end", flexWrap: "wrap" as const, marginBottom: 20 }}>
+        <div>
+          <label style={styles.label}>Analysis Type</label>
+          <select
+            value={analysisType}
+            onChange={(e) => setAnalysisType(e.target.value as "usage" | "content-review")}
+            style={{ ...styles.input, marginBottom: 0, width: 220 }}
+          >
+            <option value="usage">Usage &amp; Insights</option>
+            <option value="content-review">Content Review</option>
+          </select>
+        </div>
+        <button
+          onClick={runAnalysis}
+          disabled={loading}
+          style={{ ...styles.primaryBtn, width: "auto", padding: "8px 24px", marginBottom: 0 }}
+        >
+          {loading ? "Analyzing…" : "Run Analysis"}
+        </button>
+      </div>
+
+      {error && (
+        <div style={{ padding: 12, borderRadius: 8, background: "var(--bg-error)", border: "1px solid var(--bg-error-border)", marginBottom: 16 }}>
+          <p style={{ color: "var(--error-text)", fontSize: 13, margin: 0 }}>{error}</p>
+        </div>
+      )}
+
+      {loading && (
+        <div style={{ padding: 24, textAlign: "center" as const, color: "var(--text-muted)" }}>
+          <p style={{ fontSize: 14, margin: 0 }}>Running AI analysis — this may take 30–60 seconds…</p>
+        </div>
+      )}
+
+      {analysis && (
+        <div>
+          {usage && (
+            <div style={{ fontSize: 11, color: "var(--text-dim)", marginBottom: 12, textAlign: "right" as const }}>
+              Tokens: {usage.input_tokens.toLocaleString()} in / {usage.output_tokens.toLocaleString()} out
+            </div>
+          )}
+          <div
+            style={{
+              background: "var(--bg-card-alt)",
+              borderRadius: 8,
+              padding: 20,
+              fontSize: 14,
+              lineHeight: 1.7,
+              color: "var(--text-secondary)",
+              whiteSpace: "pre-wrap" as const,
+              fontFamily: "var(--font-body)",
+            }}
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(analysis) }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function renderMarkdown(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/`([^`]+)`/g, '<code style="background:var(--bg-input);padding:1px 4px;border-radius:3px;font-family:var(--font-mono);font-size:12px">$1</code>')
+    .replace(/^### (.+)$/gm, '<h4 style="font-size:14px;font-weight:600;color:var(--text-primary);margin:16px 0 8px">$1</h4>')
+    .replace(/^## (.+)$/gm, '<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin:20px 0 8px">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h2 style="font-size:16px;font-weight:700;color:var(--text-primary);margin:24px 0 8px">$1</h2>')
+    .replace(/^- (.+)$/gm, '<div style="padding-left:16px;margin:2px 0">&bull; $1</div>')
+    .replace(/^\d+\. (.+)$/gm, '<div style="padding-left:16px;margin:2px 0">$&</div>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
 }
 
 function Pagination({ total, offset, limit, onPage }: { total: number; offset: number; limit: number; onPage: (o: number) => void }) {
