@@ -43,3 +43,26 @@ CREATE TABLE IF NOT EXISTS custom_dimensions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_custom_dims_author ON custom_dimensions (author_key);
+
+-- ── Admin: Bans ────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS admin_bans (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  ban_type    TEXT NOT NULL CHECK (ban_type IN ('email', 'ip')),
+  ban_value   TEXT NOT NULL,
+  reason      TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_admin_bans_unique ON admin_bans (ban_type, ban_value);
+
+-- ── Admin: Audit Log ───────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS admin_audit_log (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  action      TEXT NOT NULL,
+  target_type TEXT,
+  target_id   TEXT,
+  details     JSONB,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_log_created ON admin_audit_log (created_at DESC);
