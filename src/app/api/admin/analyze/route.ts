@@ -106,35 +106,43 @@ Provide a comprehensive analysis covering:
 Be specific and reference actual data points. Use rubric IDs when referencing specific items.`;
   }
 
-  const client = new Anthropic({ apiKey });
-  const response = await client.messages.create({
-    model: "claude-opus-5-5",
-    max_tokens: 16000,
-    thinking: { type: "adaptive" },
-    output_config: { effort: "high" },
-    messages: [{ role: "user", content: prompt }],
-  });
+  try {
+    const client = new Anthropic({ apiKey });
+    const response = await client.messages.create({
+      model: "claude-opus-5-5",
+      max_tokens: 16000,
+      thinking: { type: "adaptive" },
+      output_config: { effort: "high" },
+      messages: [{ role: "user", content: prompt }],
+    });
 
-  let analysisText = "";
-  for (const block of response.content) {
-    if (block.type === "text") {
-      analysisText += block.text;
+    let analysisText = "";
+    for (const block of response.content) {
+      if (block.type === "text") {
+        analysisText += block.text;
+      }
     }
+
+    await sql`
+      INSERT INTO admin_audit_log (action, target_type, details)
+      VALUES ('ai_analysis', ${type}, ${JSON.stringify({
+        input_tokens: response.usage.input_tokens,
+        output_tokens: response.usage.output_tokens,
+      })}::jsonb)
+    `;
+
+    return NextResponse.json({
+      analysis: analysisText,
+      usage: {
+        input_tokens: response.usage.input_tokens,
+        output_tokens: response.usage.output_tokens,
+      },
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json(
+      { error: `AI analysis failed: ${message}` },
+      { status: 502 }
+    );
   }
-
-  await sql`
-    INSERT INTO admin_audit_log (action, target_type, details)
-    VALUES ('ai_analysis', ${type}, ${JSON.stringify({
-      input_tokens: response.usage.input_tokens,
-      output_tokens: response.usage.output_tokens,
-    })}::jsonb)
-  `;
-
-  return NextResponse.json({
-    analysis: analysisText,
-    usage: {
-      input_tokens: response.usage.input_tokens,
-      output_tokens: response.usage.output_tokens,
-    },
-  });
 }

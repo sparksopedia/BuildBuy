@@ -73,6 +73,10 @@ const TABS: { key: Tab; label: string }[] = [
 async function api<T>(path: string, opts?: RequestInit): Promise<T> {
   const res = await fetch(path, { credentials: "include", ...opts });
   if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ error: `Request failed (${res.status})` }));
+    throw new Error(body.error || `Request failed (${res.status})`);
+  }
   return res.json();
 }
 
@@ -713,7 +717,8 @@ function AIAnalysisPanel() {
       if (err instanceof Error && err.message === "UNAUTHORIZED") {
         setError("Session expired");
       } else {
-        setError("Analysis failed. Make sure ANTHROPIC_API_KEY is configured.");
+        const msg = err instanceof Error ? err.message : "Unknown error";
+        setError(msg);
       }
     }
     setLoading(false);
